@@ -66,8 +66,8 @@
                                                     <tr>
                                                         <td>Nakliye Bedeli</td>
                                                         <td><%#Eval("Sefer_Miktar") %></td>
-                                                        <td><%#Eval("Cari_Tutar") %></td>
-                                                        <td><%#fiyatmiktarcarp(Eval("Sefer_miktar"),Eval("Cari_Tutar")) %></td>
+                                                        <td><%#Eval("chh_aratoplam") %></td>
+                                                        <td><%#fiyatmiktarcarp(Eval("Sefer_miktar"),Eval("chh_aratoplam")) %></td>
                                                     </tr>
                                                 </ItemTemplate>
                                             </asp:Repeater>
@@ -82,19 +82,19 @@
                                 <table class="table m-b-0">
                                     <tr>
                                         <td><b>Ara Toplam</b></td>
-                                        <td>
+                                        <td Style="text-align: right">
                                             <asp:Label runat="server" ID="lblAraToplam" Style="text-align: right"></asp:Label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><b>KDV</b></td>
-                                        <td>
+                                        <td Style="text-align: right">
                                             <asp:Label runat="server" ID="lblKdv" Style="text-align: right"></asp:Label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><b>Genel Toplam</b></td>
-                                        <td>
+                                        <td Style="text-align: right">
                                             <asp:Label runat="server" ID="lblGenToplam" Style="text-align: right"></asp:Label>
                                         </td>
                                     </tr>

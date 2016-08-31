@@ -133,6 +133,44 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box">
+                <table id="datatable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Evrak No</th>
+                            <th>Tarih</th>
+                            <th>Cari
+                            </th>
+                            <th>Ara Toplam</th>
+                            <th>KDV</th>
+                            <th>Genel Toplam</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <asp:Repeater runat="server" ID="rptKayitlar">
+                            <ItemTemplate>
+                                <tr>
+                                    <td><%#Eval("chh_evrakno_sira") %></td>
+                                    <td><%#Eval("chh_tarihi")%></td>
+                                    <td><%#Eval("cari_unvan")%></td>
+                                    <td><%#Eval("chh_aratoplam")%></td>
+                                    <td><%#Eval("chh_ft_kdv")%></td>
+                                    <td><%#Eval("chh_geneltoplam")%></td>
+
+                                    <td>
+                                        <a href="javascript:;" class="btn btn-default waves-effect waves-light" onclick="confirmSil(this,'<%#Eval("chh_kayno") %>','cari_hesap_hareketleri','chh_kayno')"><i class="fa fa-remove"></i></a>
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
 

@@ -21,6 +21,7 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
             evrakNoGetir();
             //aynı evrakno girilmesin
             seferleriGetir();
+            faturaListele();
         }
     }
     public void evrakNoGetir()
@@ -56,6 +57,11 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
     protected void Kaydet(object sender, EventArgs e)
     {
         string[] arr = hdnSeferler.Value.Split(',');
+        string id = "";
+        string HareketCinsi = "0";
+        string evraknoseri = "''";
+        string evraknosira = txtEvrakNo.Text;
+        string caricins = "1";
         foreach (string item in arr)
         {
             string fiyat = f.GetDataTable("select l.lok_fiyat from lokasyonCariFiyat l,seferler s where l.lok_cari=s.Sefer_Cari and l.Lok_lokasyon=s.Sefer_lokasyon and s.sefer_kodu=" + item.tirnakla()).Rows[0][0].ToString();
@@ -73,13 +79,10 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
             }
             string sorgu = "INSERT INTO Cari_Hesap_Hareketleri VALUES(";
             string tarih = "'" + Convert.ToDateTime(txtFaturaTarihi.Text).ToString("yyyy-MM-dd") + "'";
-            string HareketCinsi = "0";
-            string evraknoseri = "''";
-            string evraknosira = txtEvrakNo.Text;
-            string caricins = "1";
-            string carikodu = "''";
 
+            string carikodu = "(select sefer_cari from seferler where sefer_kodu=" + item.tirnakla() + ")";
 
+            string aracPlaka = "(select sefer_arac from seferler where sefer_kodu=" + item.tirnakla() + ")";
 
             int seferMiktar = Convert.ToInt32(f.GetDataTable("select sefer_miktar from seferler s WHERE S.Sefer_Kodu=" + item.tirnakla()).Rows[0][0]);
 
@@ -87,15 +90,16 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
             decimal kdv = (aratoplam * 18 / 100);
             decimal gentoplam = aratoplam + kdv;
             string seferno = item;
-            sorgu += tarih + "," + HareketCinsi + "," + evraknoseri + "," + evraknosira + "," + caricins + "," + carikodu + "," + aratoplam + "," + kdv + "," + gentoplam + "," + seferno;
+            sorgu += tarih + "," + HareketCinsi + "," + evraknoseri + "," + evraknosira + "," + caricins + "," + carikodu + "," + aratoplam + "," + kdv + "," + gentoplam + "," + seferno + "," + aracPlaka;
             sorgu += ")";
             f.cmd(sorgu);
             f.cmd("update seferler set sefer_fatura=" + f.Temizle(txtEvrakNo.Text).tirnakla() + ", sefer_aktifPasif=0 where sefer_kodu=" + item);
-            //f.cmd("update Seferler set Sefer_Fatura=1 where Sefer_Kodu=" + item);
+
             Helper.mesaj(1, "Kayıt Başarılı");
-            string id = f.GetDataTable("select top 1 chh_kay_no from Cari_Hesap_Hareketleri order by id desc").Rows[0][0].ToString();
-            Response.Redirect("default.aspx?sayfa=fatura-goruntule&id=" + id);
+            id = f.GetDataTable("select top 1 chh_kayno from Cari_Hesap_Hareketleri order by chh_kayno desc").Rows[0][0].ToString();
+
         }
+        Response.Redirect("default.aspx?sayfa=fatura-goruntule&id=" + evraknosira);
     }
 
     public void carileriGetir()
@@ -112,5 +116,14 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
             }
         }
          * */
+    }
+    public void faturaListele()
+    {
+        DataTable dt = f.GetDataTable("select c.cari_unvan,chh_kayno,ch.chh_tarihi,ch.chh_evrakno_sira,ch.chh_aratoplam,ch.chh_ft_kdv,ch.chh_genelToplam from cari_hesap_hareketleri ch,cariler c where ch.chh_cari_kodu=c.cari_kodu and ch.chh_hareket_cinsi=0");
+        if (dt != null)
+        {
+           // rptKayitlar.DataSource = dt;
+           // rptKayitlar.DataBind();
+        }
     }
 }

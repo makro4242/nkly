@@ -16,6 +16,7 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
             masraflariGetir();
             araclariGetir();
             carileriGetir();
+            faturaListele();
         }
     }
     protected void Kaydet(object sender, EventArgs E)
@@ -37,9 +38,9 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
             decimal tutar = Convert.ToDecimal(txtTutar.Text);
             decimal tutarKdv = Math.Round((tutar * kdv / 100), 2);
             decimal tutarToplam = tutar + tutarKdv;
-            string cariEkle = "insert into cari_hesap_hareketleri values(" + dtTarih.ToString("yyyy-MM-dd").tirnakla() + "," + cins + "," + "''," + evrakNo + ",0," + cari + "," + tutar.ToString().Replace(",", ".") + "," + tutarKdv.ToString().Replace(",", ".").tirnakla() + "," + tutarToplam.ToString().Replace(",", ".").tirnakla() + ",0," + arac+")";
+            string cariEkle = "insert into cari_hesap_hareketleri values(" + dtTarih.ToString("yyyy-MM-dd").tirnakla() + "," + cins + "," + "''," + evrakNo + ",0," + cari + "," + tutar.ToString().Replace(",", ".") + "," + tutarKdv.ToString().Replace(",", ".").tirnakla() + "," + tutarToplam.ToString().Replace(",", ".").tirnakla() + ",0," + arac + ")";
             int cariSonuc = f.cmd(cariEkle);
-            if (cariSonuc==1)
+            if (cariSonuc == 1)
             {
                 for (int i = 0; i < taksitAy; i++)
                 {
@@ -57,7 +58,7 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
                         Helper.mesaj(0, "Kayıt Yapılamadı");
 
                     }
-                } 
+                }
             }
             else
             {
@@ -112,6 +113,15 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
             {
                 drpCariUnvan.Items.Add(new ListItem(item["Cari_Unvan"].ToString(), item["Cari_Kodu"].ToString()));
             }
+        }
+    }
+    public void faturaListele()
+    {
+        DataTable dt = f.GetDataTable("select c.cari_unvan,chh_kayno,ch.chh_tarihi,ch.chh_evrakno_sira,ch.chh_aratoplam,ch.chh_ft_kdv,ch.chh_genelToplam from cari_hesap_hareketleri ch,cariler c where ch.chh_cari_kodu=c.cari_kodu and ch.chh_hareket_cinsi=1 and chh_cari_cins=0");
+        if (dt != null)
+        {
+            rptKayitlar.DataSource = dt;
+            rptKayitlar.DataBind();
         }
     }
 }
