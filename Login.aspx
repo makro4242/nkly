@@ -68,7 +68,7 @@
                     </div>
                     <div class="form-group text-center m-t-40">
                         <div class="col-xs-12">
-                            <asp:Button ID="btnGiris" runat="server" CssClass="btn btn-pink btn-block text-uppercase waves-effect waves-light" Text="Giriş" OnClick="GirisYap" />
+                            <asp:Button ID="btnGiris" runat="server" CssClass="btn btn-pink btn-block" Text="Giriş" OnClick="GirisYap" />
                         </div>
                     </div>
 
@@ -103,6 +103,15 @@
 
     <script src="assets/js/jquery.core.js"></script>
     <script src="assets/js/jquery.app.js"></script>
+    <script type="text/javascript" src="assets/plugins/parsleyjs/dist/parsley.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('form').parsley();
+        });
+    </script>
+
 
 </body>
 </html>

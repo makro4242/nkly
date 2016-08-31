@@ -50,7 +50,7 @@
                         <hr />
                         <hr />
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label col-md-12">Masraf</label>
                                     <div class="col-md-12">
@@ -59,7 +59,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
+
                                 <div class="form-group">
                                     <label class="control-label col-md-12">Araç</label>
                                     <div class="col-md-12">
@@ -67,34 +68,46 @@
                                         </asp:DropDownList>
                                     </div>
                                 </div>
+
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label class="control-label col-md-12">Masraf Ay</label>
-                                    <div class="col-md-12">
-                                        <asp:DropDownList runat="server" ID="drpTaksit" required CssClass="form-control select2 zorunlu">
-                                            <asp:ListItem Text="Seçiniz" Value=""></asp:ListItem>
-                                            <asp:ListItem Text="1" Value="1"></asp:ListItem>
-                                            <asp:ListItem Text="2" Value="2"></asp:ListItem>
-                                            <asp:ListItem Text="3" Value="3"></asp:ListItem>
-                                            <asp:ListItem Text="4" Value="4"></asp:ListItem>
-                                            <asp:ListItem Text="5" Value="5"></asp:ListItem>
-                                            <asp:ListItem Text="6" Value="6"></asp:ListItem>
-                                            <asp:ListItem Text="7" Value="7"></asp:ListItem>
-                                            <asp:ListItem Text="8" Value="8"></asp:ListItem>
-                                            <asp:ListItem Text="9" Value="9"></asp:ListItem>
-                                            <asp:ListItem Text="10" Value="10"></asp:ListItem>
-                                            <asp:ListItem Text="11" Value="11"></asp:ListItem>
-                                            <asp:ListItem Text="12" Value="12"></asp:ListItem>
-                                        </asp:DropDownList>
+                            <div class="col-md-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-12">Masraf Ay</label>
+                                        <div class="col-md-12">
+                                            <asp:DropDownList runat="server" ID="drpTaksit" required CssClass="form-control select2 zorunlu">
+                                                <asp:ListItem Text="Seçiniz" Value=""></asp:ListItem>
+                                                <asp:ListItem Text="1" Value="1"></asp:ListItem>
+                                                <asp:ListItem Text="2" Value="2"></asp:ListItem>
+                                                <asp:ListItem Text="3" Value="3"></asp:ListItem>
+                                                <asp:ListItem Text="4" Value="4"></asp:ListItem>
+                                                <asp:ListItem Text="5" Value="5"></asp:ListItem>
+                                                <asp:ListItem Text="6" Value="6"></asp:ListItem>
+                                                <asp:ListItem Text="7" Value="7"></asp:ListItem>
+                                                <asp:ListItem Text="8" Value="8"></asp:ListItem>
+                                                <asp:ListItem Text="9" Value="9"></asp:ListItem>
+                                                <asp:ListItem Text="10" Value="10"></asp:ListItem>
+                                                <asp:ListItem Text="11" Value="11"></asp:ListItem>
+                                                <asp:ListItem Text="12" Value="12"></asp:ListItem>
+                                            </asp:DropDownList>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-12">KM</label>
+                                        <div class="col-md-12">
+                                            <asp:TextBox runat="server" data-parsley-type="number" required ID="txtKM" CssClass="form-control text-right"></asp:TextBox>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label col-md-12">KDV %</label>
                                     <div class="col-md-12">
-                                        <asp:DropDownList runat="server" ID="drpKDV" required CssClass="form-control drpKdv p0 zorunlu">
+                                        <asp:DropDownList runat="server" ID="drpKDV" required CssClass="form-control drpKdv zorunlu">
                                             <asp:ListItem Text="Seçiniz" Value=""></asp:ListItem>
                                             <asp:ListItem Text="0" Value="0"></asp:ListItem>
                                             <asp:ListItem Text="1" Value="1"></asp:ListItem>
@@ -108,7 +121,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12">KDV Hariç Tutar</label>
                                     <div class="col-md-12">
-                                        <asp:TextBox runat="server" ID="txtTutar" required Style="text-align: right" CssClass="form-control txtMasraf zorunlu">
+                                        <asp:TextBox runat="server" ID="txtTutar" required Style="text-align: right" CssClass="form-control txtMasraf zorunlu" data-parsley-type="number">
                                         </asp:TextBox>
                                     </div>
                                 </div>
@@ -167,8 +180,8 @@
                         <tr>
                             <th>Evrak No</th>
                             <th>Tarih</th>
-                            <th>Cari
-                            </th>
+                            <th>Cari</th>
+                            <th>KM</th>
                             <th>Ara Toplam</th>
                             <th>KDV</th>
                             <th>Genel Toplam</th>
@@ -182,6 +195,7 @@
                                     <td><%#Eval("chh_evrakno_sira") %></td>
                                     <td><%#Eval("chh_tarihi")%></td>
                                     <td><%#Eval("cari_unvan")%></td>
+                                    <td><%#Eval("km")%></td>
                                     <td><%#Eval("chh_aratoplam")%></td>
                                     <td><%#Eval("chh_ft_kdv")%></td>
                                     <td><%#Eval("chh_geneltoplam")%></td>

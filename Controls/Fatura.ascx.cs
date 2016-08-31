@@ -122,8 +122,8 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
         DataTable dt = f.GetDataTable("select c.cari_unvan,chh_kayno,ch.chh_tarihi,ch.chh_evrakno_sira,ch.chh_aratoplam,ch.chh_ft_kdv,ch.chh_genelToplam from cari_hesap_hareketleri ch,cariler c where ch.chh_cari_kodu=c.cari_kodu and ch.chh_hareket_cinsi=0");
         if (dt != null)
         {
-           // rptKayitlar.DataSource = dt;
-           // rptKayitlar.DataBind();
+           rptKayitlar.DataSource = dt;
+           rptKayitlar.DataBind();
         }
     }
 }

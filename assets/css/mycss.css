@@ -1,6 +1,20 @@
-﻿input[type=submit]{    background: none;
-    border: none;}
-tr.selected td{
-    background-color: #B0BED9!important;}
-.gizle{display:none}
-.p0{padding:0!important;}
+﻿input[type=submit] {
+    background: none;
+    border: none;
+}
+
+tr.selected td {
+    background-color: #B0BED9 !important;
+}
+
+.gizle {
+    display: none;
+}
+
+.p0 {
+    padding: 0 !important;
+}
+
+.text-right {
+    text-align: right;
+}

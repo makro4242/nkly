@@ -15,6 +15,7 @@ public partial class Login : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             CookieBilgileriniGetir();
+            txtSifre.Attributes["type"] = "password";
         }
     }
     protected void GirisYap(object sender, EventArgs e)
@@ -58,7 +59,6 @@ public partial class Login : System.Web.UI.Page
         {
             txtKullaniciAdi.Text = Request.Cookies["Login"]["kullaniciadi"].ToString(); //Login Cookie içerisindeki kullanici adi değerini kullaniciadilbl içine atıyoruz.
             txtSifre.Text = Request.Cookies["Login"]["sifre"].ToString(); //Login Cookie içerisindeki değeri sifrelbl içine atıyoruz. Böylece Cookie değerlerimizi almış oluyoruz.
-            txtSifre.Attributes["type"] = "password";
             chxBeniHatirla.Checked = true;
         }
     }

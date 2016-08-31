@@ -34,11 +34,12 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
             string masraf = drpMasraf.SelectedValue.tirnakla();
             string arac = drpArac.SelectedValue.tirnakla();
             int taksitAy = Convert.ToInt32(drpTaksit.SelectedValue);
+            string km = f.Temizle(txtKM.Text).tirnakla();
             int kdv = Convert.ToInt32(drpKDV.SelectedValue);
             decimal tutar = Convert.ToDecimal(txtTutar.Text);
             decimal tutarKdv = Math.Round((tutar * kdv / 100), 2);
             decimal tutarToplam = tutar + tutarKdv;
-            string cariEkle = "insert into cari_hesap_hareketleri values(" + dtTarih.ToString("yyyy-MM-dd").tirnakla() + "," + cins + "," + "''," + evrakNo + ",0," + cari + "," + tutar.ToString().Replace(",", ".") + "," + tutarKdv.ToString().Replace(",", ".").tirnakla() + "," + tutarToplam.ToString().Replace(",", ".").tirnakla() + ",0," + arac + ")";
+            string cariEkle = "insert into cari_hesap_hareketleri values(" + dtTarih.ToString("yyyy-MM-dd").tirnakla() + "," + cins + "," + "''," + evrakNo + ",0," + cari + "," + tutar.ToString().Replace(",", ".") + "," + tutarKdv.ToString().Replace(",", ".").tirnakla() + "," + tutarToplam.ToString().Replace(",", ".").tirnakla() + ",0," + arac + "," + km + ")";
             int cariSonuc = f.cmd(cariEkle);
             if (cariSonuc == 1)
             {
@@ -47,7 +48,7 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
                     decimal taksitTutar = Math.Round((tutar / taksitAy), 2);
                     decimal taksitKdv = Math.Round(taksitTutar * kdv / 100, 2);
                     decimal taksitToplam = Math.Round((taksitTutar + taksitKdv), 2);
-                    string sorgu = "insert into cari_hesap_hareketleri values(" + dtTarih.AddMonths((i + 1)).ToString("yyyy-MM-dd").tirnakla() + "," + cins + ",''," + evrakNo + ",1," + masraf + "," + taksitTutar.ToString().Replace(",", ".").tirnakla() + "," + taksitKdv.ToString().Replace(",", ".").tirnakla() + "," + taksitToplam.ToString().Replace(",", ".").tirnakla() + "," + "0," + arac + ")";
+                    string sorgu = "insert into cari_hesap_hareketleri values(" + dtTarih.AddMonths((i + 1)).ToString("yyyy-MM-dd").tirnakla() + "," + cins + ",''," + evrakNo + ",1," + masraf + "," + taksitTutar.ToString().Replace(",", ".").tirnakla() + "," + taksitKdv.ToString().Replace(",", ".").tirnakla() + "," + taksitToplam.ToString().Replace(",", ".").tirnakla() + "," + "0," + arac + "," + km + ")";
                     int sonuc = f.cmd(sorgu);
                     if (sonuc == 1)
                     {
@@ -75,6 +76,7 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
        ,[chh_ft_kdv]
        ,[chh_geneltoplam]
        ,[chh_SeferNo])*/
+            faturaListele();
         }
     }
     public void masraflariGetir()
@@ -117,7 +119,7 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
     }
     public void faturaListele()
     {
-        DataTable dt = f.GetDataTable("select c.cari_unvan,chh_kayno,ch.chh_tarihi,ch.chh_evrakno_sira,ch.chh_aratoplam,ch.chh_ft_kdv,ch.chh_genelToplam from cari_hesap_hareketleri ch,cariler c where ch.chh_cari_kodu=c.cari_kodu and ch.chh_hareket_cinsi=1 and chh_cari_cins=0");
+        DataTable dt = f.GetDataTable("select ch.km,c.cari_unvan,chh_kayno,ch.chh_tarihi,ch.chh_evrakno_sira,ch.chh_aratoplam,ch.chh_ft_kdv,ch.chh_genelToplam from cari_hesap_hareketleri ch,cariler c where ch.chh_cari_kodu=c.cari_kodu and ch.chh_hareket_cinsi=1 and chh_cari_cins=0");
         if (dt != null)
         {
             rptKayitlar.DataSource = dt;
