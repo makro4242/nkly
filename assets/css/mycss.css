@@ -1,0 +1,6 @@
+﻿input[type=submit]{    background: none;
+    border: none;}
+tr.selected td{
+    background-color: #B0BED9!important;}
+.gizle{display:none}
+.p0{padding:0!important;}
