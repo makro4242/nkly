@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 public class MyFonksiyon
 {
     public SqlConnection baglan()
-    {
+    {   //hydr
         // string conString = ("Data Source=.; Initial Catalog=Nakliye;Integrated Security=true");
         string conString = ("Data Source=93.89.230.234; Initial Catalog=nakliyeee; User Id=haydar; Password=nxw77_K8");
         SqlConnection baglanti = new SqlConnection(conString);
