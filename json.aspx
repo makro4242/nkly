@@ -2,5 +2,11 @@
 murat
 dere
 zizou ss
+<<<<<<< HEAD
 erdem
 kabasa
+=======
+acaba
+
+erdem kabasakal
+>>>>>>> origin/master
