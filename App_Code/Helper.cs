@@ -11,7 +11,7 @@ public class Helper
     MyFonksiyon f = new MyFonksiyon();
     public Helper()
     {
-        //
+        //HAYDAR
         // TODO: Add constructor logic here
         //
     }
