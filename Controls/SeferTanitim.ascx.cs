@@ -44,7 +44,8 @@ public partial class Controls_SeferTanitim : System.Web.UI.UserControl
                 drpMusteri.SelectedValue = dt.Rows[0]["Sefer_Cari"].ToString();
                 drpSeferArac.SelectedValue = dt.Rows[0]["Sefer_Arac"].ToString();
                 drpSeferLokasyon.SelectedValue = dt.Rows[0]["Sefer_Lokasyon"].ToString();
-                txtSeferMiktar.Text = dt.Rows[0]["Sefer_Miktar"].ToString();
+                txtSeferMiktarKg.Text = dt.Rows[0]["Sefer_MiktarKG"].ToString();
+                txtSeferMiktarLt.Text = dt.Rows[0]["Sefer_MiktarLT"].ToString();
                 txtBasKm.Text = dt.Rows[0]["Sefer_BasKm"].ToString();
                 txtBitKm.Text = dt.Rows[0]["Sefer_BitKm"].ToString();
                 txtIrsaliyeNo.Text = dt.Rows[0]["Sefer_IrsaliyeNo"].ToString();
@@ -140,7 +141,7 @@ public partial class Controls_SeferTanitim : System.Web.UI.UserControl
             string tarih = Convert.ToDateTime(txtSeferTarihi.Text).ToString("yyyy-MM-dd");
             if (Request.QueryString["id"] == null)
             {
-                string sorgu = "INSERT INTO [dbo].[Seferler]VALUES('" + f.Temizle(txtSeferSayisi.Text.ToUpper()) + "','" + tarih + "','0','" + drpSeferPersoneli.SelectedValue + "','" + drpMusteri.SelectedValue + "','" + drpSeferArac.SelectedValue + "','" + drpSeferLokasyon.SelectedValue + "','" + f.Temizle(txtSeferMiktar.Text) + "','" + txtBasKm.Text + "','" + txtBitKm.Text + "','0'," + txtIrsaliyeNo.Text.tirnakla() + ")";
+                string sorgu = "INSERT INTO [dbo].[Seferler]VALUES('" + f.Temizle(txtSeferSayisi.Text.ToUpper()) + "','" + tarih + "','0','" + drpSeferPersoneli.SelectedValue + "','" + drpMusteri.SelectedValue + "','" + drpSeferArac.SelectedValue + "','" + drpSeferLokasyon.SelectedValue + "','" + f.Temizle(txtSeferMiktarKg.Text) + "'," + f.Temizle(txtSeferMiktarLt.Text).tirnakla() + ",'" + txtBasKm.Text + "','" + txtBitKm.Text + "','0'," + txtIrsaliyeNo.Text.tirnakla() + ")";
                 int sonuc = f.cmd(sorgu);
                 if (sonuc > 0)
                 {
@@ -154,7 +155,7 @@ public partial class Controls_SeferTanitim : System.Web.UI.UserControl
             }
             else
             {
-                string sorgu = "update seferler set Sefer_Kodu=" + f.Temizle(txtSeferSayisi.Text).tirnakla() + ",Sefer_Tarih=" + tarih.tirnakla() + ",Sefer_Personel=" + drpSeferPersoneli.SelectedValue.tirnakla() + ",Sefer_Cari=" + drpMusteri.SelectedValue.tirnakla() + ",Sefer_Arac=" + drpSeferArac.SelectedValue.tirnakla() + ",Sefer_lokasyon=" + drpSeferLokasyon.SelectedValue.tirnakla() + ",Sefer_Miktar=" + txtSeferMiktar.Text.tirnakla() + ",Sefer_BasKm=" + f.Temizle(txtBasKm.Text).tirnakla() + ",Sefer_BitKm=" + f.Temizle(txtBitKm.Text).tirnakla() + ",Sefer_AktifPasif=" + chcAktifPasif.Checked.ToString().tirnakla() + " where Id=" + f.Temizle(Request.QueryString["id"]);
+                string sorgu = "update seferler set Sefer_Kodu=" + f.Temizle(txtSeferSayisi.Text).tirnakla() + ",Sefer_Tarih=" + tarih.tirnakla() + ",Sefer_Personel=" + drpSeferPersoneli.SelectedValue.tirnakla() + ",Sefer_Cari=" + drpMusteri.SelectedValue.tirnakla() + ",Sefer_Arac=" + drpSeferArac.SelectedValue.tirnakla() + ",Sefer_lokasyon=" + drpSeferLokasyon.SelectedValue.tirnakla() + ",Sefer_MiktarKg=" + txtSeferMiktarKg.Text.tirnakla()+",Sefer_MiktarLT="+txtSeferMiktarLt.Text.tirnakla() + ",Sefer_BasKm=" + f.Temizle(txtBasKm.Text).tirnakla() + ",Sefer_BitKm=" + f.Temizle(txtBitKm.Text).tirnakla() + ",Sefer_AktifPasif=" + chcAktifPasif.Checked.ToString().tirnakla() + " where Id=" + f.Temizle(Request.QueryString["id"]);
                 int sonuc = f.cmd(sorgu);
                 if (sonuc > 0)
                 {

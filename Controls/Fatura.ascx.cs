@@ -45,9 +45,29 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
             txtEvrakNo.Text = sayi.ToString();
         }
     }
+    public string tutarBelirle(object seferMiktarKg, object SeferMiktarLt, object FiyatTip, object fiyat, object lok_Paket)
+    {
+        decimal tutar = 0;
+        if (Convert.ToByte(lok_Paket) == 0)
+        {
+            if (Convert.ToByte(FiyatTip) == 1)
+            {
+                tutar = Convert.ToDecimal(fiyat) * Convert.ToDecimal(seferMiktarKg);
+            }
+            else
+            {
+                tutar = Convert.ToDecimal(fiyat) * Convert.ToDecimal(SeferMiktarLt);
+            }
+        }
+        else
+        {
+            tutar = Convert.ToDecimal(fiyat);
+        }
+        return tutar.ToString();
+    }
     public void seferleriGetir()
     {
-        DataTable dt = f.GetDataTable("select s.sefer_kodu,s.sefer_IrsaliyeNo,s.sefer_tarih,l.lok_fiyat as fiyat,lk.lokasyon_aciklama,s.Sefer_Kodu,s.Sefer_BasKm,s.Sefer_BitKm,s.Sefer_Miktar,s.Sefer_Cari,a.arac_plaka,p.Personel_AdiSoyadi,substring(c.Cari_Unvan,0,25) as cari_unvan from Lokasyon lk, LokasyonCariFiyat l,Seferler s, Araclar a,Personeller p,Cariler c where s.Sefer_Fatura=0 and a.Arac_Plaka=s.Sefer_Arac and p.Personel_Kodu=s.Sefer_Personel and c.Cari_Kodu=s.Sefer_Cari and l.lok_lokasyon=s.sefer_lokasyon and l.lok_cari=s.sefer_cari and lk.Lokasyon_Kodu=s.Sefer_Lokasyon and s.sefer_miktar!=0");
+        DataTable dt = f.GetDataTable("select l.Lok_Fiyat_Tip,L.Lok_Paket,s.sefer_kodu,s.sefer_IrsaliyeNo,s.sefer_tarih,l.lok_fiyat as fiyat,lk.lokasyon_aciklama,s.Sefer_Kodu,s.Sefer_BasKm,s.Sefer_BitKm,s.Sefer_MiktarKG,s.Sefer_MiktarLt,s.Sefer_Cari,a.arac_plaka,p.Personel_AdiSoyadi,substring(c.Cari_Unvan,0,25) as cari_unvan from Lokasyon lk, LokasyonCariFiyat l,Seferler s, Araclar a,Personeller p,Cariler c where s.Sefer_Fatura=0 and a.Arac_Plaka=s.Sefer_Arac and p.Personel_Kodu=s.Sefer_Personel and c.Cari_Kodu=s.Sefer_Cari and l.lok_lokasyon=s.sefer_lokasyon and l.lok_cari=s.sefer_cari and lk.Lokasyon_Kodu=s.Sefer_Lokasyon and s.sefer_miktarKG!=0 and s.sefer_miktarLT!=0");
         if (dt != null)
         {
             rptSeferler.DataSource = dt;
@@ -122,8 +142,8 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
         DataTable dt = f.GetDataTable("select c.cari_unvan,chh_kayno,ch.chh_tarihi,ch.chh_evrakno_sira,ch.chh_aratoplam,ch.chh_ft_kdv,ch.chh_genelToplam from cari_hesap_hareketleri ch,cariler c where ch.chh_cari_kodu=c.cari_kodu and ch.chh_hareket_cinsi=0");
         if (dt != null)
         {
-           rptKayitlar.DataSource = dt;
-           rptKayitlar.DataBind();
+            rptKayitlar.DataSource = dt;
+            rptKayitlar.DataBind();
         }
     }
 }

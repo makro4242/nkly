@@ -38,8 +38,23 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Fiyat</label>
-                                <div class="col-md-10">
+                                <div class="col-md-7">
                                     <asp:TextBox runat="server" ID="txtLokFiyat" CssClass="form-control zorunlu select2" required data-parsley-maxlength="10" placeholder="Fiyat Yazınız..."></asp:TextBox>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="radio radio-info radio-inline">
+                                        <asp:RadioButton runat="server" ID="rdbKG" GroupName="rdbFiyat" />
+                                        <label for="<%=rdbKG.ClientID %>">
+                                            KG
+                                        </label>
+                                    </div>
+
+                                    <div class="radio radio-info radio-inline">
+                                        <asp:RadioButton runat="server" ID="rdbLT" GroupName="rdbFiyat" />
+                                        <label for="<%=rdbLT.ClientID %>">
+                                            LT
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">

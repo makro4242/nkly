@@ -16,9 +16,30 @@ public partial class Controls_LokasyonCariFiyatTanitim : System.Web.UI.UserContr
         kartlarilistele();
         if (!Page.IsPostBack)
         {
+            rdbKG.Checked = true;
             carileriGetir();
             LokasyonlariGetir();
+            if (Request.QueryString["id"]!=null)
+            {
+                bilgileriGetir();
+            }
         }
+    }
+    public void bilgileriGetir()
+    {
+        DataTable dt = f.GetDataTable("select * from lokasyoncarifiyat where id=" + f.Temizle(Request.QueryString["id"]));
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            txtLokFiyat.Text = dt.Rows[0]["Lok_Fiyat"].ToString();
+            drpLokasyon.SelectedValue = dt.Rows[0]["Lok_Lokasyon"].ToString();
+            drpMusteri.SelectedValue = dt.Rows[0]["Lok_Cari"].ToString();
+            byte tip = Convert.ToByte(dt.Rows[0]["Lok_Fiyat_tip"]);
+            rdbKG.Checked = tip == 1 ? true : false;
+            rdbLT.Checked = tip == 0 ? true : false;
+            byte paket = Convert.ToByte(dt.Rows[0]["Lok_Paket"]);
+            chxPaketFiyati.Checked = paket == 1 ? true : false;
+        }
+
     }
     protected void Kaydet(object sender, EventArgs e)
     {
@@ -28,9 +49,12 @@ public partial class Controls_LokasyonCariFiyatTanitim : System.Web.UI.UserContr
         }
         else
         {
+            int tip = rdbKG.Checked ? 1 : 0;
+            int paket = chxPaketFiyati.Checked ? 1 : 0;
             if (Request.QueryString["id"] == null)
             {
-                string sorgu = "INSERT INTO [dbo].[LokasyonCariFiyat]([Lok_Lokasyon],[Lok_Cari],Lok_Fiyat)VALUES('" + drpLokasyon.SelectedValue + "','" + drpMusteri.SelectedValue + "', '" + txtLokFiyat.Text + "')";
+
+                string sorgu = "INSERT INTO [dbo].[LokasyonCariFiyat]([Lok_Lokasyon],[Lok_Cari],Lok_Fiyat,Lok_Fiyat_Tip,Lok_Paket)VALUES('" + drpLokasyon.SelectedValue + "','" + drpMusteri.SelectedValue + "', '" + txtLokFiyat.Text + "'," + tip + "," + paket + ")";
                 int sonuc = f.cmd(sorgu);
                 if (sonuc > 0)
                 {
@@ -44,7 +68,7 @@ public partial class Controls_LokasyonCariFiyatTanitim : System.Web.UI.UserContr
             }
             else
             {
-                string sorgu = "UPDATE [dbo].[LokasyonCariFiyat] SET [Lok_Lokasyon]=" + drpLokasyon.SelectedValue + ",[Lok_Cari]=" + drpMusteri.SelectedValue + ",[Lok_Fiyat]=" + txtLokFiyat.Text + ", where Id=" + Request.QueryString["id"];
+                string sorgu = "UPDATE [dbo].[LokasyonCariFiyat] SET [Lok_Lokasyon]=" + drpLokasyon.SelectedValue.tirnakla() + ",[Lok_Cari]=" + drpMusteri.SelectedValue.tirnakla() + ",[Lok_Fiyat]=" + txtLokFiyat.Text.tirnakla() + ",Lok_Fiyat_Tip=" + tip + ",Lok_paket=" + paket + " where Id=" + Request.QueryString["id"];
                 int sonuc = f.cmd(sorgu);
                 if (sonuc > 0)
                 {

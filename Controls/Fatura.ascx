@@ -55,7 +55,8 @@
                                             <th>Hizmet</th>
                                             <th>Tarih</th>
                                             <th>Cari</th>
-                                            <th>Miktar</th>
+                                            <th>Miktar KG</th>
+                                            <th>Miktar LT</th>
                                             <th>Fiyat</th>
                                             <th style="display: none">FiyatSayi</th>
                                             <th>Tutar</th>
@@ -75,10 +76,11 @@
                                                     <td>Nakliye Bedeli</td>
                                                     <td><%#Eval("sefer_tarih").ToString().Split(' ')[0] %></td>
                                                     <td><%#Eval("Cari_Unvan") %></td>
-                                                    <td><%#Eval("Sefer_miktar") %></td>
+                                                    <td><%#Eval("Sefer_miktarKG") %></td>
+                                                    <td><%#Eval("Sefer_miktarLT") %></td>
                                                     <td><%#Eval("Fiyat") %></td>
                                                     <td style="display: none;"><%#Eval("Fiyat") %></td>
-                                                    <td><%#Convert.ToDecimal(Eval("Fiyat"))*Convert.ToDecimal(Eval("Sefer_miktar")) %></td>
+                                                    <td><%#tutarBelirle(Eval("sefer_miktarKg"),Eval("sefer_miktarLT"),Eval("Lok_fiyat_tip"),Eval("Fiyat"),Eval("lok_Paket")) %></td>
                                                     <td style="display: none;"><%#Eval("Fiyat") %></td>
                                                     <td><%#Eval("Sefer_IrsaliyeNo") %></td>
                                                     <td><%#Eval("arac_plaka") %></td>

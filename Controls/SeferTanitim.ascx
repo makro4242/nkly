@@ -81,9 +81,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-2 control-label">Miktar</label>
-                                <div class="col-md-4">
-                                    <asp:TextBox runat="server" ID="txtSeferMiktar" CssClass="form-control" MaxLength="7" placeholder="Miktar Yazınız..."></asp:TextBox>
+                                <label class="col-md-2 control-label">Miktar KG - LT</label>
+                                <div class="col-md-5">
+                                    <asp:TextBox runat="server" ID="txtSeferMiktarKg" CssClass="form-control" MaxLength="7" placeholder="Miktar KG Yazınız..." data-parsley-type="number"></asp:TextBox>
+                                </div>
+                                 <div class="col-md-5">
+                                    <asp:TextBox runat="server" ID="txtSeferMiktarLt" CssClass="form-control" MaxLength="7" placeholder="Miktar LT Yazınız..." data-parsley-type="number"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="form-group">

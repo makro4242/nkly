@@ -50,6 +50,10 @@ public partial class Login : System.Web.UI.Page
                 Response.Redirect("/");
             }
         }
+        else
+        {
+            Helper.mesaj(0, "Giriş Bilgileriniz Hatalı");
+        }
 
     }
     public void CookieBilgileriniGetir()
