@@ -125,7 +125,7 @@
                                     <label class="col-md-6 control-label"></label>
                                     <div class="col-md-6">
                                         <asp:HiddenField runat="server" ID="hdnSeferler" />
-                                        <asp:Button ID="btnKaydet" runat="server" CssClass="btn btn-info waves-effect waves-light pull-right" OnClick="Kaydet" OnClientClick="return seferKontrol()" Text="Kaydet" />
+                                        <asp:Button ID="btnKaydet" runat="server" CssClass="btn btn-info waves-light pull-right" OnClick="Kaydet" OnClientClick="return seferKontrol()" Text="Kaydet" />
                                     </div>
                                 </div>
                             </div>

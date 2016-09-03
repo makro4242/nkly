@@ -86,7 +86,7 @@
 
                             <div class="form-group m-b-0">
                                 <div class="pull-right">
-                                    <asp:Button ID="btnKaydet" runat="server" type="submit" CssClass="btn btn-info waves-effect waves-light " OnClick="Kaydet" Text="Kaydet" />
+                                    <asp:Button ID="btnKaydet" runat="server" type="submit" CssClass="btn btn-info waves-light " OnClick="Kaydet" Text="Kaydet" />
                                 </div>
                             </div>
                             <asp:HiddenField runat="server" ID="hdnseferkodu" />

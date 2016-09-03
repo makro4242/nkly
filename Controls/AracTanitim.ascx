@@ -56,7 +56,7 @@
                             </div>
                              <div class="form-group m-b-0">
                                 <div class="pull-right">
-                                    <asp:Button ID="btnKaydet" runat="server" CssClass="btn btn-info waves-effect waves-light" onclick="Kaydet" Text="Kaydet" />
+                                    <asp:Button ID="btnKaydet" runat="server" CssClass="btn btn-info waves-light" onclick="Kaydet" Text="Kaydet" />
                                 </div>
                             </div>
                         

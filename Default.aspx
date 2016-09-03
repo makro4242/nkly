@@ -9,8 +9,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Nakliye Programı Makrosoft">
-    <meta name="author" content="Coderthemes">
+    <meta name="description" content="Nakliye Programı">
+    <meta name="author" content="Makrosoft">
 
     <link rel="shortcut icon" href="assets/images/favicon_1.ico">
     <link href="assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
