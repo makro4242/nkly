@@ -34,6 +34,10 @@ public class service : System.Web.Services.WebService
             try
             {
                 strReturn = (Convert.ToInt32(strReturn) + 1).ToString();
+                while (strReturn.Length < 3)
+                {
+                    strReturn = "0" + strReturn;
+                }
             }
             catch (Exception)
             {
