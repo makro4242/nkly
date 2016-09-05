@@ -42,15 +42,15 @@ public partial class Sofor_Controls_SeferTanitim : System.Web.UI.UserControl
         Helper.mesaj(1, "Kayıt Güncelleme Başarılı");
         Response.Redirect(Request.RawUrl);
     }
-    
+
     public void seferBilgileriniGetir()
     {
-        DataTable dt = f.GetDataTable("select s.sefer_IrsaliyeNo,s.Sefer_BasKm,s.Sefer_BitKm,s.Sefer_MiktarKG,s.sefer_MiktarLT,s.Sefer_Kodu,s.Sefer_Tarih,s.Sefer_Arac,a.Arac_Plaka,s.Sefer_Cari,c.Cari_Unvan,s.Sefer_Personel,p.Personel_AdiSoyadi from Seferler s left join Cariler c on s.Sefer_Cari=c.Cari_Kodu  left join Personeller p on s.Sefer_Personel=p.Personel_Kodu left join Araclar a on s.Sefer_Arac=a.Arac_Plaka where Sefer_Personel=" + Request.Cookies["sofor"]["kullaniciadi"].ToString().tirnakla() + " and Sefer_AktifPasif=1");
+        DataTable dt = f.GetDataTable("select s.sefer_IrsaliyeNo,s.Sefer_BasKm,s.Sefer_BitKm,s.Sefer_MiktarKG,s.sefer_MiktarLT,s.Sefer_Kodu,s.Sefer_Tarih,s.Sefer_Arac,a.Arac_Plaka,s.Sefer_Cari,c.Cari_Unvan,s.Sefer_Personel,p.Personel_AdiSoyadi from Seferler s left join Cariler c on s.Sefer_Cari=c.Cari_Kodu  left join Personeller p on s.Sefer_Personel=p.Personel_Kodu left join Araclar a on s.Sefer_Arac=a.Arac_Plaka where Sefer_Personel=" + Request.Cookies["sofor"]["kullaniciadi"].ToString().tirnakla() + " and Sefer_AktifPasif=1 and sefer_kodu=" + Request.QueryString["seferkodu"]);
         if (dt != null && dt.Rows.Count > 0)
         {
             hdnseferkodu.Value = dt.Rows[0]["Sefer_Kodu"].ToString();
             txtSeferSayisi.Text = dt.Rows[0]["Sefer_Kodu"].ToString();
-            txtSeferTarihi.Text = dt.Rows[0]["Sefer_Tarih"].ToString();
+            txtSeferTarihi.Text = dt.Rows[0]["Sefer_Tarih"].ToString().Split(' ')[0];
             txtSeferPersoneli.Text = dt.Rows[0]["Personel_AdiSoyadi"].ToString();
             txtMusteri.Text = dt.Rows[0]["Cari_Unvan"].ToString();
             txtSeferArac.Text = dt.Rows[0]["Arac_Plaka"].ToString();

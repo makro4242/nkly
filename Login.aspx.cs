@@ -37,6 +37,8 @@ public partial class Login : System.Web.UI.Page
             {
                 HttpCookie cookienesne2 = new HttpCookie("Sofor");
                 cookienesne2["kullaniciadi"] = txtKullaniciAdi.Text;
+                string adiSoyadi = f.GetDataCell("select personel_Adisoyadi from personeller where personel_kodu=" + txtKullaniciAdi.Text);
+                cookienesne2["adiSoyadi"] = adiSoyadi;
                 cookienesne2.Expires = DateTime.Now.AddDays(7);
                 Response.Cookies.Add(cookienesne2);
                 Response.Redirect("/Sofor");

@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Vergi No</label>
                                 <div class="col-md-10">
-                                    <asp:TextBox runat="server" ID="txtVergiNo" class="form-control" data-mask="99999999999" data-parsley-maxlength="50" placeholder="Vergi Noyu Yazınız..."></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtVergiNo" class="form-control" data-parsley-maxlength="50" placeholder="Vergi Noyu Yazınız..."></asp:TextBox>
                                 </div>
                             </div>
                             <div class="form-group">

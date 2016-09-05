@@ -205,8 +205,12 @@
                 <!--- Divider -->
                 <div id="sidebar-menu">
                     <ul>
-                        <li class="text-muted menu-title">Menu</li>
-                        <li><a href="Default.aspx?sayfa=SeferTanitim">Sefer Tanıtım Kartı</a></li>
+                        <li class="text-muted menu-title">Seferler</li>
+                        <asp:Repeater runat="server" ID="rptSeferler">
+                            <ItemTemplate>
+                                <li><a href="Default.aspx?sayfa=SeferTanitim&seferKodu=<%#Eval("sefer_kodu") %>"><%#Eval("sefer_kodu") %> Numaralı Sefer</a></li>
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </ul>
                 </div>
             </div>
