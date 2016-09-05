@@ -62,6 +62,7 @@ public partial class PersonelTanitim : System.Web.UI.UserControl
                     int sonuc = f.cmd(sorgu);
                     if (sonuc > 0)
                     {
+                        f.cmd("update kullanicilar set kullanici_sifre=" + txtPersonelSifre.Text.tirnakla() + " where kullanici_user=" + txtPersonelKodu.Text.tirnakla());
                         Helper.mesaj(1, "Güncelleme Başarılı");  //sql e kayıt girildiği zaman yani işlem başarılı ise ...  
                         Response.Redirect(Request.RawUrl.Split('&')[0]);
                     }
@@ -85,12 +86,13 @@ public partial class PersonelTanitim : System.Web.UI.UserControl
         try
         {
             int id = Convert.ToInt32(Request.QueryString["id"].ToString());
-            DataTable dt = f.GetDataTable("SELECT * FROM Personeller where Id=" + Request.QueryString["id"].ToString());
+            DataTable dt = f.GetDataTable("SELECT p.*,k.kullanici_sifre FROM Personeller p, kullanicilar k where CONVERT(varchar(10), p.personel_kodu)=k.kullanici_user  and p.Id=" + Request.QueryString["id"].ToString());
             if (dt != null && dt.Rows.Count > 0)
             {
                 txtPersonelKodu.Text = dt.Rows[0]["Personel_Kodu"].ToString();
                 txtPersonelAdiSoyadi.Text = dt.Rows[0]["Personel_AdiSoyadi"].ToString();
-
+                txtPersonelSifre.Text = dt.Rows[0]["kullanici_sifre"].ToString();
+                txtPersonelTelefonu.Text = dt.Rows[0]["Personel_Telefonu"].ToString();
             }
         }
         catch (Exception)
