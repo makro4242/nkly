@@ -57,6 +57,12 @@ public partial class Controls_SeferTanitim : System.Web.UI.UserControl
                 {
                     chcAktifPasif.Checked = false;
                 }
+                string seferFatura = dt.Rows[0]["sefer_fatura"].ToString();
+                if (seferFatura.Trim().Length > 0 && seferFatura.Trim() != "0")
+                {
+                    btnKaydet.Enabled = false;
+                    Helper.mesaj(0, "Bu sefer faturalandırıldığı için güncelleme yapılamaz");
+                }
             }
 
         }
