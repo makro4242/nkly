@@ -23,6 +23,13 @@ public class service : System.Web.Services.WebService
         //Uncomment the following line if using designed components 
         //InitializeComponent(); 
     }
+
+    [WebMethod]
+    public string evrakMasraf()
+    {
+        return "";
+    }
+
     [WebMethod]
     public string cariKodu(string kod)
     {

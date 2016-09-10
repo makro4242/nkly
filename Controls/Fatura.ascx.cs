@@ -48,7 +48,8 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
     public string tutarBelirle(object seferMiktarKg, object SeferMiktarLt, object FiyatTip, object fiyat, object lok_Paket)
     {
         decimal tutar = 0;
-        if (Convert.ToByte(lok_Paket) == 0)
+        fiyat = fiyat.ToString().Replace(".", ",");
+        if (lok_Paket.ToString().Trim().Length > 0 && Convert.ToByte(lok_Paket) == 0)
         {
             if (Convert.ToByte(FiyatTip) == 1)
             {
@@ -63,7 +64,8 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
         {
             tutar = Convert.ToDecimal(fiyat);
         }
-        return tutar.ToString();
+       
+        return  String.Format("{0:N}", tutar);
     }
     public void seferleriGetir()
     {

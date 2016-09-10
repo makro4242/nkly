@@ -63,9 +63,7 @@
                                             <th style="display: none">TutarSayi</th>
                                             <th>İrsaliye No</th>
                                             <th>Araç</th>
-                                            <th>Personel</th>
                                             <th>Km</th>
-                                            <th>Lokasyon</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -78,15 +76,13 @@
                                                     <td><%#Eval("Cari_Unvan") %></td>
                                                     <td><%#Eval("Sefer_miktarKG") %></td>
                                                     <td><%#Eval("Sefer_miktarLT") %></td>
-                                                    <td><%#Eval("Fiyat") %></td>
+                                                    <td><input type="text" value="<%#Eval("Fiyat") %>" class="form-control"/></td>
                                                     <td style="display: none;"><%#Eval("Fiyat") %></td>
                                                     <td><%#tutarBelirle(Eval("sefer_miktarKg"),Eval("sefer_miktarLT"),Eval("Lok_fiyat_tip"),Eval("Fiyat"),Eval("lok_Paket")) %></td>
                                                     <td style="display: none;"><%#Eval("Fiyat") %></td>
                                                     <td><%#Eval("Sefer_IrsaliyeNo") %></td>
                                                     <td><%#Eval("arac_plaka") %></td>
-                                                    <td><%#Eval("personel_adiSoyadi") %></td>
                                                     <td><%#Eval("Sefer_bitkm") %></td>
-                                                    <td><%#Eval("lokasyon_aciklama") %></td>
                                                 </tr>
                                             </ItemTemplate>
                                         </asp:Repeater>

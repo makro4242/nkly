@@ -47,8 +47,8 @@
             <!-- LOGO -->
             <div class="topbar-left">
                 <div class="text-center">
-                    <a href="Default.aspx" class="logo">
-                        <span>POÇAN LOJİSTİK</span>
+                  <a href="Default.aspx" class="logo">
+                      <span><img src="/assets/images/logo.jpg" style="height:55px;" /></span>
                     </a>
                 </div>
             </div>

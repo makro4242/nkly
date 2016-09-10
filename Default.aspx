@@ -50,7 +50,7 @@
             <div class="topbar-left">
                 <div class="text-center">
                     <a href="Default.aspx" class="logo">
-                        <span>POÇAN LOJİSTİK</span>
+                      <span><img src="/assets/images/logo.jpg" style="height:55px;" /></span>
                     </a>
                 </div>
             </div>

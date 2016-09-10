@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="EvrakMasrafFaturasi.ascx.cs" Inherits="Controls_EvrakMasrafFaturasi" %>
+﻿KDV Hariç Tutar<%@ Control Language="C#" AutoEventWireup="true" CodeFile="EvrakMasrafFaturasi.ascx.cs" Inherits="Controls_EvrakMasrafFaturasi" %>
 <div class="container">
 
     <!-- Page-Title -->
@@ -70,8 +70,8 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-4">
-                                <div class="col-md-6">
+                            <div class="col-md-3">
+                                <div class="col-md-7">
                                     <div class="form-group">
                                         <label class="control-label col-md-12">Masraf Ay</label>
                                         <div class="col-md-12">
@@ -94,7 +94,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
                                     <div class="form-group">
                                         <label class="control-label col-md-12">KM</label>
                                         <div class="col-md-12">
@@ -125,6 +125,10 @@
                                         </asp:TextBox>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-1">
+                                 <label class="control-label col-md-12">&nbsp;</label>
+                                <button class="btn btn-info waves-light pull-right">EKLE</button>
                             </div>
                         </div>
 
