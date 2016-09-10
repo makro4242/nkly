@@ -50,7 +50,8 @@
             <div class="topbar-left">
                 <div class="text-center">
                     <a href="Default.aspx" class="logo">
-                      <span><img src="/assets/images/logo.jpg" style="height:55px;" /></span>
+                        <span>
+                            <img src="/assets/images/logo.jpg" style="height: 55px;" /></span>
                     </a>
                 </div>
             </div>
@@ -303,6 +304,51 @@
     <script src="//cdn.datatables.net/plug-ins/1.10.12/api/fnReloadAjax.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            $.fn.serializeObject = function () {
+                var o = {};
+                var a = this.serializeArray();
+                $.each(a, function () {
+                    if (o[this.name] !== undefined) {
+                        if (!o[this.name].push) {
+                            o[this.name] = [o[this.name]];
+                        }
+                        o[this.name].push(this.value || '');
+                    } else {
+                        o[this.name] = this.value || '';
+                    }
+                });
+                return o;
+            };
+            $(".txtEvrakNo").blur(function () {
+
+            });
+            $('.frmMasraf').submit(function () {
+
+                var msj = JSON.stringify($('.frmMasraf').serializeObject());
+                $.ajax({
+                    type: "POST",
+                    url: "/service.asmx/evrakMasraf",
+                    data: msj,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (msg) {
+                        var element = $("<div class='row'></div>");
+                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>Cari Ünvan</label></div>");
+                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>Cari Ünvan</label></div>");
+                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>Cari Ünvan</label></div>");
+                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>Cari Ünvan</label></div>");
+                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>Cari Ünvan</label></div>");
+                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>Cari Ünvan</label></div>");
+                        $(".masrafListele").append(element);
+                        $(".masrafListele").append("<hr/>");
+
+                    },
+                    error: function () {
+                        alert('hata');
+                    }
+                });
+                return false;
+            });
+
             $('.bestupper').bestupper({
                 ln: 'tr'
             });

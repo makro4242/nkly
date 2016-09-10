@@ -9,13 +9,16 @@ using System.Web.UI.WebControls;
 public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
 {
     MyFonksiyon f = new MyFonksiyon();
+    public string drpCariler = "", drpAraclar = "", drpMasraflar = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
         {
-            masraflariGetir();
-            araclariGetir();
-            carileriGetir();
+            dropDownGetir("masraflar", "masraf_aciklama", "masraf_kodu", ref drpMasraflar);
+            dropDownGetir("araclar", "arac_plaka", "arac_plaka", ref drpAraclar);
+            dropDownGetir("Cariler", "Cari_Unvan", "Cari_Kodu", ref drpCariler);
+
+
             faturaListele();
         }
     }
@@ -27,6 +30,7 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
         }
         else
         {
+            /*
             string evrakNo = f.Temizle(txtEvrakNo.Text).tirnakla();
             DateTime dtTarih = Convert.ToDateTime(txtFaturaTarihi.Text);
             string cins = "1";
@@ -65,6 +69,7 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
             {
                 Helper.mesaj(0, "Kayıt Yapılamadı");
             }
+             * */
             /*
              *  ([chh_tarihi]
        ,[chh_Hareket_Cinsi]
@@ -79,44 +84,23 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
             faturaListele();
         }
     }
-    public void masraflariGetir()
-    {
-        DataTable dt = f.GetDataTable("select masraf_kodu,masraf_aciklama from masraflar");
-        if (dt != null)
-        {
-            drpMasraf.Items.Add(new ListItem("Seçiniz", ""));
-            foreach (DataRow item in dt.Rows)
-            {
-                drpMasraf.Items.Add(new ListItem(item["masraf_aciklama"].ToString(), item["masraf_kodu"].ToString()));
-            }
-        }
-    }
-    public void araclariGetir()
-    {
-        DataTable dt = f.GetDataTable("select arac_plaka from araclar");
-        if (dt != null)
-        {
-            drpArac.Items.Add(new ListItem("Seçiniz", ""));
-            foreach (DataRow item in dt.Rows)
-            {
-                drpArac.Items.Add(new ListItem(item["arac_plaka"].ToString(), item["arac_plaka"].ToString()));
-            }
-        }
-    }
-    public void carileriGetir()
+    public void dropDownGetir(string tablo, string kolonText, string kolonValue, ref string output)
     {
 
+        DataTable dt = f.GetDataTable("select " + kolonValue + " as kolon1," + kolonText + " as kolon2 from " + tablo);
 
-        DataTable dt = f.GetDataTable("SELECT Cari_Kodu,Cari_Unvan from Cariler");
         if (dt != null)
         {
-            drpCariUnvan.Items.Add(new ListItem("Seçiniz", ""));
+            output += "<option value=''>Seçiniz</option>";
             foreach (DataRow item in dt.Rows)
             {
-                drpCariUnvan.Items.Add(new ListItem(item["Cari_Unvan"].ToString(), item["Cari_Kodu"].ToString()));
+                output += "<option value=" + item["kolon1"] + ">" + item["kolon2"] + "</option>";
             }
         }
+
     }
+
+  
     public void faturaListele()
     {
         DataTable dt = f.GetDataTable("select ch.km,c.cari_unvan,chh_kayno,ch.chh_tarihi,ch.chh_evrakno_sira,ch.chh_aratoplam,ch.chh_ft_kdv,ch.chh_genelToplam from cari_hesap_hareketleri ch,cariler c where ch.chh_cari_kodu=c.cari_kodu and ch.chh_hareket_cinsi=1 and chh_cari_cins=0");

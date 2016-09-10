@@ -21,20 +21,20 @@
         <div class="col-sm-12">
             <div class="card-box">
                 <div class="row">
-                    <form id="frm" runat="server" role="form">
+                    <form class="frmMasraf">
                         <div class="row form-horizontal">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Evrak No</label>
                                     <div class="col-md-4">
-                                        <asp:TextBox ID="txtEvrakNo" runat="server" CssClass="form-control zorunlu" required data-parsley-maxlength="25"></asp:TextBox>
+                                        <input type="text" id="txtEvrakno" name="evrakNo" class="form-control" required data-parsley-maxlength="25" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Tarih</label>
                                     <div class="col-md-4">
                                         <div class="input-group">
-                                            <asp:TextBox ID="txtFaturaTarihi" runat="server" CssClass="form-control tarih zorunlu" required data-parsley-maxlength="11" placeholder data-mask="99/99/9999"></asp:TextBox>
+                                            <input type="text" id="txtFaturaTarihi" name="faturaTarihi" class="form-control tarih" required data-parsley-maxlength="25" />
                                             <span class="input-group-addon bg-custom b-0 text-white"><i class="icon-calender"></i></span>
                                         </div>
                                     </div>
@@ -42,20 +42,22 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Cari Ünvan</label>
                                     <div class="col-md-8">
-                                        <asp:DropDownList runat="server" required ID="drpCariUnvan" CssClass="form-control select2 drpCari zorunlu"></asp:DropDownList>
+                                        <select name="cariKodu" id="drpCariKodu" class="form-control select2" required>
+                                            <%=drpCariler %>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <hr />
                         <hr />
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label col-md-12">Masraf</label>
                                     <div class="col-md-12">
-                                        <asp:DropDownList runat="server" ID="drpMasraf" required CssClass="form-control select2 zorunlu">
-                                        </asp:DropDownList>
+                                        <select name="masrafKodu" id="drpMasraf" required class="form-control select2">
+                                            <%=drpMasraflar %>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -64,42 +66,41 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12">Araç</label>
                                     <div class="col-md-12">
-                                        <asp:DropDownList runat="server" ID="drpArac" required CssClass="form-control select2 zorunlu">
-                                        </asp:DropDownList>
+                                        <select name="aracPlaka" id="drpArac" required class="form-control select2">
+                                            <%=drpAraclar %>
+                                        </select>
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="col-md-3">
-                                <div class="col-md-7">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-12">Masraf Ay</label>
-                                        <div class="col-md-12">
-                                            <asp:DropDownList runat="server" ID="drpTaksit" required CssClass="form-control select2 zorunlu">
-                                                <asp:ListItem Text="Seçiniz" Value=""></asp:ListItem>
-                                                <asp:ListItem Text="1" Value="1"></asp:ListItem>
-                                                <asp:ListItem Text="2" Value="2"></asp:ListItem>
-                                                <asp:ListItem Text="3" Value="3"></asp:ListItem>
-                                                <asp:ListItem Text="4" Value="4"></asp:ListItem>
-                                                <asp:ListItem Text="5" Value="5"></asp:ListItem>
-                                                <asp:ListItem Text="6" Value="6"></asp:ListItem>
-                                                <asp:ListItem Text="7" Value="7"></asp:ListItem>
-                                                <asp:ListItem Text="8" Value="8"></asp:ListItem>
-                                                <asp:ListItem Text="9" Value="9"></asp:ListItem>
-                                                <asp:ListItem Text="10" Value="10"></asp:ListItem>
-                                                <asp:ListItem Text="11" Value="11"></asp:ListItem>
-                                                <asp:ListItem Text="12" Value="12"></asp:ListItem>
-                                            </asp:DropDownList>
-                                        </div>
-
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12">Masraf Ay</label>
+                                    <div class="col-md-12">
+                                        <select name="taksitSayisi" id="drpTaksit" required class="form-control select2">
+                                            <option value="">Seçiniz</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                        </select>
                                     </div>
+
                                 </div>
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-12">KM</label>
-                                        <div class="col-md-12">
-                                            <asp:TextBox runat="server" data-parsley-type="number" required ID="txtKM" CssClass="form-control text-right"></asp:TextBox>
-                                        </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label class="control-label col-md-12">KM</label>
+                                    <div class="col-md-12">
+                                        <input type="text" data-parsley-type="number" required id="txtKm" name="km" class="form-control text-right" />
                                     </div>
                                 </div>
                             </div>
@@ -107,13 +108,15 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12">KDV %</label>
                                     <div class="col-md-12">
-                                        <asp:DropDownList runat="server" ID="drpKDV" required CssClass="form-control drpKdv zorunlu">
-                                            <asp:ListItem Text="Seçiniz" Value=""></asp:ListItem>
-                                            <asp:ListItem Text="0" Value="0"></asp:ListItem>
-                                            <asp:ListItem Text="1" Value="1"></asp:ListItem>
-                                            <asp:ListItem Text="8" Value="8"></asp:ListItem>
-                                            <asp:ListItem Text="18" Value="18"></asp:ListItem>
-                                        </asp:DropDownList>
+                                        <select name="kdv" id="drpKDV" required class="form-control select2">
+                                            <option value="">Seçiniz </option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="8">8</option>
+                                            <option value="18">18 </option>
+
+                                        </select>
+
                                     </div>
                                 </div>
                             </div>
@@ -121,20 +124,23 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12">KDV Hariç Tutar</label>
                                     <div class="col-md-12">
-                                        <asp:TextBox runat="server" ID="txtTutar" required Style="text-align: right" CssClass="form-control txtMasraf zorunlu" data-parsley-type="number">
-                                        </asp:TextBox>
+                                        <input type="text" data-parsley-type="number" required id="txtTutar" name="tutar" class="form-control text-right" />
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-1">
-                                 <label class="control-label col-md-12">&nbsp;</label>
-                                <button class="btn btn-info waves-light pull-right">EKLE</button>
+                                <label class="control-label col-md-12">&nbsp;</label>
+                                <button class="btn btn-info waves-light pull-right msrfEkle">EKLE</button>
                             </div>
+
                         </div>
-
                         <hr />
-                        <hr />
-
+                        
+                    </form>
+                    <div class="col-md-12 masrafListele"></div>
+                    <hr />
+                    <form id="frm" runat="server" role="form">
                         <div class="row">
                             <div class="col-md-4 pull-right">
                                 <div class="form-group">

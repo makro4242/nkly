@@ -1,4 +1,5 @@
-﻿using System;
+﻿using myLibrary;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -17,6 +18,19 @@ using System.Web.Services;
 public class service : System.Web.Services.WebService
 {
     MyFonksiyon f = new MyFonksiyon();
+    myDbHelper db = new myDbHelper(new sqlDbHelper());
+    class evrak
+    {
+        public string masraf { get; set; }
+        public string arac { get; set; }
+        public string taksit { get; set; }
+        public string Km { get; set; }
+        public string KDV { get; set; }
+        public string tutar { get; set; }
+        public string toplamTutar { get; set; }
+        public string toplamKDV { get; set; }
+
+    }
     public service()
     {
 
@@ -25,9 +39,52 @@ public class service : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public string evrakMasraf()
+    public string evrakMasraf(string evrakNo, string faturaTarihi, string cariKodu, string masrafKodu, string aracPlaka, string taksitSayisi, string km, string kdv, string tutar)
     {
-        return "";
+        /*
+        DateTime dtTarih = Convert.ToDateTime(faturaTarihi);
+        string evrakNoSeri = "";
+        string tarih = dtTarih.ToString("yyyy-MM-dd");
+        string cins = "1";
+        int taksitAy = Convert.ToInt32(taksitSayisi);
+        int kdvSayi = Convert.ToInt32(kdv);
+        decimal tutarSayi = Convert.ToDecimal(tutar);
+        decimal tutarKdv = Math.Round((tutarSayi * kdvSayi / 100), 2);
+        decimal tutarToplam = tutarSayi + tutarKdv;
+
+        string insert = "INSERT INTO [Cari_Hesap_Hareketleri] vallues(@tarih,@cins,@evrakNo,@evrakSira,@cariCins,@cariKodu,@araToplam,@kdv,@genelToplam,@seferNo,@arac,@km)";
+
+        string prm = "tarih=" + tarih + ",cins=" + cins + ",evrakNo=" + evrakNoSeri.stringKaldir() + ",evrakSira=" + evrakNo.stringKaldir() + ",cariCins=0,cariKodu=" + cariKodu.stringKaldir() + ",araToplam=" + tutar.stringKaldir() + ",kdv=" + kdv.stringKaldir() + ",geneltoplam=" + tutarToplam.ToString().stringKaldir() + ",seferNo=0,arac=" + aracPlaka.stringKaldir() + ",km=" + km.stringKaldir();
+        int sonuc = db.nonQuery(CommandType.Text, insert, prm);
+        if (sonuc == 1)
+        {
+            decimal taksitTutar = Math.Round((tutarSayi / Convert.ToInt32(taksitSayisi)), 2);
+            decimal taksitKdv = Math.Round(taksitTutar * kdvSayi / 100, 2);
+            decimal taksitToplam = Math.Round((taksitTutar + taksitKdv), 2);
+            for (int i = 0; i < taksitAy; i++)
+            {
+
+                prm = "tarih=" + tarih + ",cins=" + cins + ",evrakNo=" + evrakNoSeri.stringKaldir() + ",evrakSira=" + evrakNo.stringKaldir() + ",cariCins=1,cariKodu=" + cariKodu.stringKaldir() + ",araToplam=" + taksitTutar.ToString().stringKaldir() + ",kdv=" + taksitKdv.ToString().stringKaldir() + ",geneltoplam=" + taksitToplam.ToString().stringKaldir() + ",seferNo=0,arac=" + aracPlaka.stringKaldir() + ",km=" + km.stringKaldir();
+                if (sonuc == 1)
+                {
+                    Helper.mesaj(1, "Kayıt Başarılı");
+                }
+                else
+                {
+                    Helper.mesaj(0, "Kayıt Yapılamadı");
+
+                }
+            }
+            evrak em = new evrak();
+            em.masraf = masrafKodu;
+            em.arac = aracPlaka;
+            em.taksit = taksitSayisi;
+            em.Km = km;
+            em.KDV = kdv;
+            em.tutar = tutar;
+        }
+         * */
+        return "deneme";
     }
 
     [WebMethod]
