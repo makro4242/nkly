@@ -27,14 +27,14 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Evrak No</label>
                                     <div class="col-md-4">
-                                        <input type="text" id="txtEvrakno" name="evrakNo" class="form-control" required data-parsley-maxlength="25" />
+                                        <input type="text" id="txtEvrakno" name="evrakNo" class="form-control kitle" required data-parsley-maxlength="25" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Tarih</label>
                                     <div class="col-md-4">
                                         <div class="input-group">
-                                            <input type="text" id="txtFaturaTarihi" name="faturaTarihi" class="form-control tarih" required data-parsley-maxlength="25" />
+                                            <input type="text" id="txtFaturaTarihi" name="faturaTarihi" class="form-control tarih kitle" required data-parsley-maxlength="25" />
                                             <span class="input-group-addon bg-custom b-0 text-white"><i class="icon-calender"></i></span>
                                         </div>
                                     </div>
@@ -42,7 +42,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Cari Ünvan</label>
                                     <div class="col-md-8">
-                                        <select name="cariKodu" id="drpCariKodu" class="form-control select2" required>
+                                        <select name="cariKodu" id="drpCariKodu" class="form-control select2 kitle" required>
                                             <%=drpCariler %>
                                         </select>
                                     </div>
@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12">Masraf</label>
                                     <div class="col-md-12">
-                                        <select name="masrafKodu" id="drpMasraf" required class="form-control select2">
+                                        <select name="masrafKodu" id="drpMasraf" required class="form-control select2 temizle">
                                             <%=drpMasraflar %>
                                         </select>
                                     </div>
@@ -66,7 +66,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12">Araç</label>
                                     <div class="col-md-12">
-                                        <select name="aracPlaka" id="drpArac" required class="form-control select2">
+                                        <select name="aracPlaka" id="drpArac" required class="form-control select2 temizle">
                                             <%=drpAraclar %>
                                         </select>
                                     </div>
@@ -77,7 +77,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12">Masraf Ay</label>
                                     <div class="col-md-12">
-                                        <select name="taksitSayisi" id="drpTaksit" required class="form-control select2">
+                                        <select name="taksitSayisi" id="drpTaksit" required class="form-control select2 temizle">
                                             <option value="">Seçiniz</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -100,7 +100,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12">KM</label>
                                     <div class="col-md-12">
-                                        <input type="text" data-parsley-type="number" required id="txtKm" name="km" class="form-control text-right" />
+                                        <input type="text" data-parsley-type="number" required id="txtKm" name="km" class="form-control text-right temizle" />
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12">KDV %</label>
                                     <div class="col-md-12">
-                                        <select name="kdv" id="drpKDV" required class="form-control select2">
+                                        <select name="kdv" id="drpKDV" required class="form-control select2 temizle">
                                             <option value="">Seçiniz </option>
                                             <option value="0">0</option>
                                             <option value="1">1</option>
@@ -124,7 +124,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12">KDV Hariç Tutar</label>
                                     <div class="col-md-12">
-                                        <input type="text" data-parsley-type="number" required id="txtTutar" name="tutar" class="form-control text-right" />
+                                        <input type="text" data-parsley-type="number" required id="txtTutar" name="tutar" class="form-control text-right temizle" />
 
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@
                                     <label class="col-md-6 control-label"></label>
                                     <div class="col-md-6">
                                         <asp:HiddenField runat="server" ID="hdnSeferler" />
-                                        <asp:Button ID="btnKaydet" runat="server" CssClass="btn btn-info waves-light pull-right" OnClick="Kaydet" Text="Kaydet" />
+                                        <asp:Button ID="btnKaydet" runat="server" CssClass="btn btn-info waves-light pull-right" OnClick="Kaydet" Text="Yeni Fatura" />
                                     </div>
                                 </div>
                             </div>

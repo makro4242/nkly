@@ -323,27 +323,40 @@
 
             });
             $('.frmMasraf').submit(function () {
-
+                $('.msrfEkle').attr("disabled", true);
+                $('.kitle').attr("disabled", false);
                 var msj = JSON.stringify($('.frmMasraf').serializeObject());
                 $.ajax({
                     type: "POST",
+                    contentType: "application/json; charset=utf-8",
                     url: "/service.asmx/evrakMasraf",
                     data: msj,
-                    contentType: "application/json; charset=utf-8",
                     success: function (msg) {
+                        var msrf = (jQuery.parseJSON((msg.d)));
                         var element = $("<div class='row'></div>");
-                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>Cari Ünvan</label></div>");
-                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>Cari Ünvan</label></div>");
-                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>Cari Ünvan</label></div>");
-                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>Cari Ünvan</label></div>");
-                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>Cari Ünvan</label></div>");
-                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>Cari Ünvan</label></div>");
+                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>" + msrf["masraf"] + "</label></div>");
+                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>" + msrf["arac"] + "</label></div>");
+                        $(element).append("<div class='col-md-2 text-center'><label class='col-md-12 control-label'>" + msrf["taksit"] + "</label></div>");
+                        $(element).append("<div class='col-md-1 text-center'><label class='col-md-12 control-label'>" + msrf["Km"] + "</label></div>");
+                        $(element).append("<div class='col-md-2 text-center'><label class='col-md-12 control-label'>%   " + msrf["KDV"] + "</label></div>");
+                        $(element).append("<div class='col-md-2 text-right'><label class='col-md-12 control-label'>" + msrf["tutar"] + "</label></div>");
+                        $(".spnAraToplam").html(msrf["toplamTutar"]);
+                        $(".spnKdv").html(msrf["toplamKDV"]);
+                        $(".spnGenToplam").html(msrf["genelToplamTutar"]);
+
+
                         $(".masrafListele").append(element);
                         $(".masrafListele").append("<hr/>");
+                        $('.msrfEkle').attr("disabled", false);
+                    
+                        $(".temizle").val("");
+                        $(".temizle").select2("val", "");
+                        $('.kitle').attr("disabled", true);
+                        ShowMessageBox("success", "", "Kayıt Eklendi");
 
                     },
                     error: function () {
-                        alert('hata');
+                        ShowMessageBox("error", "", "Kayıt yapılamıyor");
                     }
                 });
                 return false;
