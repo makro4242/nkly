@@ -42,10 +42,10 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
 
     }
 
-  
+
     public void faturaListele()
     {
-        DataTable dt = f.GetDataTable("select ch.km,c.cari_unvan,chh_kayno,ch.chh_tarihi,ch.chh_evrakno_sira,ch.chh_aratoplam,ch.chh_ft_kdv,ch.chh_genelToplam from cari_hesap_hareketleri ch,cariler c where ch.chh_cari_kodu=c.cari_kodu and ch.chh_hareket_cinsi=1 and chh_cari_cins=0");
+        DataTable dt = f.GetDataTable("select c.cari_unvan,ch.chh_tarihi,ch.chh_evrakno_sira,sum(ch.chh_aratoplam) as araToplam,sum(ch.chh_ft_kdv) as kdv,sum(ch.chh_genelToplam) as genelToplam from cari_hesap_hareketleri ch,cariler c where ch.chh_cari_kodu=c.cari_kodu and ch.chh_hareket_cinsi=1 and chh_cari_cins=0 group by chh_evrakno_sira,chh_tarihi,cari_unvan");
         if (dt != null)
         {
             rptKayitlar.DataSource = dt;

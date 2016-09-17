@@ -13,12 +13,8 @@
 
 		options: {
 			addButton: '#addToTable',
-			table: '#datatable-editable',
-			dialog: {
-				wrapper: '#dialog',
-				cancelButton: '#dialogCancel',
-				confirmButton: '#dialogConfirm',
-			}
+			table: '#dtSeferler',
+			
 		},
 
 		initialize: function() {

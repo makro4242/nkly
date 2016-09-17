@@ -55,13 +55,13 @@
                                             <th>Hizmet</th>
                                             <th>Tarih</th>
                                             <th>Cari</th>
-                                            <th>Miktar KG</th>
-                                            <th>Miktar LT</th>
+                                            <th>Mik. KG</th>
+                                            <th>Mik. LT</th>
                                             <th>Fiyat</th>
                                             <th style="display: none">FiyatSayi</th>
                                             <th>Tutar</th>
                                             <th style="display: none">TutarSayi</th>
-                                            <th>İrsaliye No</th>
+                                            <th>İrs. No</th>
                                             <th>Araç</th>
                                             <th>Km</th>
                                         </tr>
@@ -74,15 +74,16 @@
                                                     <td>Nakliye Bedeli</td>
                                                     <td><%#Eval("sefer_tarih").ToString().Split(' ')[0] %></td>
                                                     <td><%#Eval("Cari_Unvan") %></td>
-                                                    <td><%#Eval("Sefer_miktarKG") %></td>
-                                                    <td><%#Eval("Sefer_miktarLT") %></td>
-                                                    <td><input type="text" value="<%#Eval("Fiyat") %>" class="form-control"/></td>
+                                                    <td><%# String.Format("{0:N}", Eval("Sefer_miktarKG")) %></td>
+                                                    <td><%# String.Format("{0:N}", Eval("Sefer_miktarLT")) %></td>
+                                                    <td><%#String.Format("{0:N}",Eval("Fiyat").ToString()) %></td>
                                                     <td style="display: none;"><%#Eval("Fiyat") %></td>
-                                                    <td><%#tutarBelirle(Eval("sefer_miktarKg"),Eval("sefer_miktarLT"),Eval("Lok_fiyat_tip"),Eval("Fiyat"),Eval("lok_Paket")) %></td>
-                                                    <td style="display: none;"><%#Eval("Fiyat") %></td>
+                                                    <td><%#String.Format("{0:N}", tutarBelirle(Eval("sefer_miktarKg"),Eval("sefer_miktarLT"),Eval("Lok_fiyat_tip"),Eval("Fiyat"),Eval("lok_Paket")))%></td>
+                                                    <td style="display: none;"><%#tutarBelirle(Eval("sefer_miktarKg"),Eval("sefer_miktarLT"),Eval("Lok_fiyat_tip"),Eval("Fiyat"),Eval("lok_Paket")).Replace(",",".")%></td>
                                                     <td><%#Eval("Sefer_IrsaliyeNo") %></td>
                                                     <td><%#Eval("arac_plaka") %></td>
                                                     <td><%#Eval("Sefer_bitkm") %></td>
+
                                                 </tr>
                                             </ItemTemplate>
                                         </asp:Repeater>

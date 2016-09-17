@@ -17,27 +17,31 @@ public partial class Controls_Fatura_goruntule : System.Web.UI.UserControl
         }
 
     }
+    public decimal geneltoplam = 0;
+
     public void faturagetir()
     {
-        DataTable dt = f.GetDataTable("select ch.chh_tarihi,c.Cari_Unvan,ch.chh_evrakno_sira,sf.Sefer_Miktar,ch.chh_geneltoplam,ch.chh_aratoplam,ch.chh_ft_kdv,ch.chh_geneltoplam from Cari_Hesap_Hareketleri ch, Cariler c, Seferler sf where ch.chh_SeferNo=sf.Sefer_Kodu and ch.chh_cari_kodu=c.Cari_Kodu and ch.chh_evrakno_sira=" + Request.QueryString["id"]);
+        DataTable dt = f.GetDataTable("select ch.chh_tarihi,c.Cari_Unvan,ch.chh_evrakno_sira,sf.Sefer_MiktarKG as sefer_miktar,ch.chh_geneltoplam,ch.chh_aratoplam,ch.chh_ft_kdv,ch.chh_geneltoplam from Cari_Hesap_Hareketleri ch, Cariler c, Seferler sf where ch.chh_SeferNo=sf.Sefer_Kodu and ch.chh_cari_kodu=c.Cari_Kodu and ch.chh_evrakno_sira=" + Request.QueryString["id"]);
         if (dt != null && dt.Rows.Count > 0)
         {
             rptgoruntule.DataSource = dt;
             rptgoruntule.DataBind();
             decimal aratoplam = 0;
+            decimal kdv = 0;
             foreach (DataRow item in dt.Rows)
             {
-                aratoplam += Convert.ToDecimal(item["chh_aratoplam"]) * Convert.ToDecimal(item["sefer_miktar"]);
+                aratoplam += Convert.ToDecimal(item["chh_aratoplam"]);
+                kdv += Convert.ToDecimal(item["chh_ft_kdv"]);
+                geneltoplam += Convert.ToDecimal(item["chh_geneltoplam"]);
+
             }
-            decimal kdv = aratoplam * 8 / 100;
-            decimal geneltoplam = kdv + aratoplam;
-            lblGenToplam.Text = geneltoplam.ToString();
-            lblKdv.Text = kdv.ToString();
-            lblAraToplam.Text = aratoplam.ToString();
+            lblGenToplam.Text = String.Format("{0:N}", geneltoplam);
+            lblKdv.Text = String.Format("{0:N}", kdv);
+            lblAraToplam.Text = String.Format("{0:N}", aratoplam);
         }
     }
-    public int fiyatmiktarcarp(object fiyat, object miktar)
+    public decimal fiyatmiktarcarp(object fiyat, object miktar)
     {
-        return Convert.ToInt32(fiyat) * Convert.ToInt32(miktar);
+        return Convert.ToDecimal(fiyat) * Convert.ToDecimal(miktar);
     }
 }

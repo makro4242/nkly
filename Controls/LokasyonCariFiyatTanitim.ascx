@@ -39,7 +39,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Fiyat</label>
                                 <div class="col-md-7">
-                                    <asp:TextBox runat="server" ID="txtLokFiyat" CssClass="form-control zorunlu select2" required data-parsley-maxlength="10" placeholder="Fiyat Yazınız..."></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtLokFiyat" CssClass="form-control zorunlu" required data-parsley-maxlength="10" placeholder="Fiyat Yazınız..."></asp:TextBox>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="radio radio-info radio-inline">

@@ -17,7 +17,6 @@
     <title>Makrosoft Nakliye Programı</title>
 
     <!--Morris Chart CSS -->
-    <link href="cdn.datatables.net/responsive/2.1.0/css/dataTables.responsive.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
@@ -245,7 +244,6 @@
     </script>
 
     <!-- jQuery  -->
-    <script src="cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.js"></script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/detect.js"></script>
@@ -348,7 +346,7 @@
                         $(".masrafListele").append(element);
                         $(".masrafListele").append("<hr/>");
                         $('.msrfEkle').attr("disabled", false);
-                    
+
                         $(".temizle").val("");
                         $(".temizle").select2("val", "");
                         $('.kitle').attr("disabled", true);
@@ -429,9 +427,10 @@
             $("#datatable").dataTable();
             table = $('#dtSeferler').dataTable();
             $('#dtSeferler tbody').on('click', 'tr', function () {
+
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
-                    araToplam -= parseInt($(this).find('td').eq(7).text());
+                    araToplam -= parseFloat($(this).find('td').eq(9).text());
                     var removeItem = $(this).find('td').eq(0).text();
                     idler = jQuery.grep(idler, function (value) {
                         return value != removeItem;
@@ -441,11 +440,16 @@
                 else {
                     $(this).addClass('selected');
                     idler.push($(this).find('td').eq(0).text());
+                    araToplam += parseFloat($(this).find('td').eq(9).text());
 
-                    araToplam += parseInt($(this).find('td').eq(7).text());
+
                 }
-                kdv = araToplam * 18 / 100;
+                kdv = araToplam * 8 / 100;
+                kdv = yuvarla(kdv, 2);
                 genToplam = araToplam + kdv;
+
+                genToplam = yuvarla(genToplam, 2);
+
                 $(".spnAraToplam").html(formatYap(araToplam));
                 $(".spnKdv").html(formatYap(kdv));
                 $(".spnGenToplam").html(formatYap(genToplam));

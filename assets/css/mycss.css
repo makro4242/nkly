@@ -18,6 +18,28 @@ tr.selected td {
 .text-right {
     text-align: right;
 }
+
 .text-center {
     text-align: center;
 }
+
+.tblUnvan {
+    margin-top: -5px;
+    font-size: 12px;
+}
+
+    .tblUnvan tr td {
+        padding:0 0 5px 60px!important;
+    }
+
+.tblTarih {
+    margin-top: 40px;
+    font-size: 12px;
+
+}
+
+    .tblTarih tr td {
+
+        text-align: right;
+     
+    }

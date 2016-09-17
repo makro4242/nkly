@@ -5,12 +5,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using myLibrary;
 
 public partial class Controls_Fatura : System.Web.UI.UserControl
 {
     MyFonksiyon f = new MyFonksiyon();
     Helper hp = new Helper();
-
+    myDbHelper db = new myDbHelper(new sqlDbHelper());
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
@@ -64,8 +65,8 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
         {
             tutar = Convert.ToDecimal(fiyat);
         }
-       
-        return  String.Format("{0:N}", tutar);
+
+        return tutar.ToString();
     }
     public void seferleriGetir()
     {
@@ -86,19 +87,7 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
         string caricins = "1";
         foreach (string item in arr)
         {
-            string fiyat = f.GetDataTable("select l.lok_fiyat from lokasyonCariFiyat l,seferler s where l.lok_cari=s.Sefer_Cari and l.Lok_lokasyon=s.Sefer_lokasyon and s.sefer_kodu=" + item.tirnakla()).Rows[0][0].ToString();
-            decimal fiyatInt = 0;
-            if (fiyat.Length > 0)
-            {
-                try
-                {
-                    fiyatInt = Convert.ToDecimal(fiyat);
-                }
-                catch (Exception)
-                {
-                    fiyatInt = 0;
-                }
-            }
+            string fiyat = "";
             string sorgu = "INSERT INTO Cari_Hesap_Hareketleri VALUES(";
             string tarih = "'" + Convert.ToDateTime(txtFaturaTarihi.Text).ToString("yyyy-MM-dd") + "'";
 
@@ -106,13 +95,19 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
 
             string aracPlaka = "(select sefer_arac from seferler where sefer_kodu=" + item.tirnakla() + ")";
 
-            int seferMiktar = Convert.ToInt32(f.GetDataTable("select sefer_miktar from seferler s WHERE S.Sefer_Kodu=" + item.tirnakla()).Rows[0][0]);
+            DataTable dtFiyatBilgileri = db.exReaderDT(CommandType.Text, "select s.sefer_miktarKG,s.Sefer_MiktarLT,l.lok_fiyat,l.lok_fiyat_tip,l.Lok_paket from seferler s,lokasyonCariFiyat l where s.sefer_lokasyon=l.lok_lokasyon and s.sefer_cari=l.lok_cari and s.sefer_kodu=@seferKodu", "seferKodu=" + item);
 
-            decimal aratoplam = (fiyatInt * seferMiktar);
-            decimal kdv = (aratoplam * 18 / 100);
+            decimal aratoplam = 0;
+            if (dtFiyatBilgileri != null && dtFiyatBilgileri.Rows.Count > 0)
+            {
+                aratoplam = Convert.ToDecimal(tutarBelirle(dtFiyatBilgileri.Rows[0]["sefer_miktarKG"], dtFiyatBilgileri.Rows[0]["sefer_miktarLT"], dtFiyatBilgileri.Rows[0]["lok_Fiyat_tip"], dtFiyatBilgileri.Rows[0]["lok_Fiyat"], dtFiyatBilgileri.Rows[0]["lok_paket"]));
+            }
+
+
+            decimal kdv = (aratoplam * 8 / 100);
             decimal gentoplam = aratoplam + kdv;
             string seferno = item;
-            sorgu += tarih + "," + HareketCinsi + "," + evraknoseri + "," + evraknosira + "," + caricins + "," + carikodu + "," + aratoplam + "," + kdv + "," + gentoplam + "," + seferno + "," + aracPlaka;
+            sorgu += tarih + "," + HareketCinsi + "," + evraknoseri + "," + evraknosira + "," + caricins + "," + carikodu + "," + aratoplam.ToString().Replace(",", ".").tirnakla() + "," + kdv.ToString().Replace(",", ".").tirnakla() + "," + gentoplam.ToString().Replace(",", ".").tirnakla() + "," + seferno + "," + aracPlaka + ",0";
             sorgu += ")";
             f.cmd(sorgu);
             f.cmd("update seferler set sefer_fatura=" + f.Temizle(txtEvrakNo.Text).tirnakla() + ", sefer_aktifPasif=0 where sefer_kodu=" + item);

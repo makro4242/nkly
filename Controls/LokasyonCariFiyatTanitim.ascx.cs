@@ -27,7 +27,7 @@ public partial class Controls_LokasyonCariFiyatTanitim : System.Web.UI.UserContr
     }
     public void bilgileriGetir()
     {
-        DataTable dt = f.GetDataTable("select * from lokasyoncarifiyat where id=" + f.Temizle(Request.QueryString["id"]));
+        DataTable dt = f.GetDataTable("select * from lokasyoncarifiyat where Id=" + f.Temizle(Request.QueryString["id"]));
         if (dt != null && dt.Rows.Count > 0)
         {
             txtLokFiyat.Text = dt.Rows[0]["Lok_Fiyat"].ToString();
