@@ -28,10 +28,10 @@
                                 <table class="table tblUnvan">
                                     <tbody>
                                         <tr style="padding-left: 30px;">
-                                            <td>MUSTAFA YAMAN</td>
+                                            <td><%=cariUnvan %></td>
                                         </tr>
                                         <tr>
-                                            <td>Taşpınar Mah. KAzım Karabekir Cad. No:14</td>
+                                            <td><%=cariAdres %></td>
                                         </tr>
                                     </tbody>
                                 </table>
