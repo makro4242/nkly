@@ -155,9 +155,9 @@
                                     <td><%#Eval("chh_evrakno_sira") %></td>
                                     <td><%#Eval("chh_tarihi")%></td>
                                     <td><%#Eval("cari_unvan")%></td>
-                                    <td><%#Eval("chh_aratoplam")%></td>
-                                    <td><%#Eval("chh_ft_kdv")%></td>
-                                    <td><%#Eval("chh_geneltoplam")%></td>
+                                    <td><%#String.Format("{0:N}",Eval("chh_aratoplam"))%></td>
+                                    <td><%#String.Format("{0:N}",Eval("chh_ft_kdv"))%></td>
+                                    <td><%#String.Format("{0:N}",Eval("chh_geneltoplam"))%></td>
 
                                     <td>
                                         <a href="javascript:;" class="btn btn-default waves-effect waves-light" onclick="confirmSil(this,'<%#Eval("chh_kayno") %>','cari_hesap_hareketleri','chh_kayno')"><i class="fa fa-remove"></i></a>

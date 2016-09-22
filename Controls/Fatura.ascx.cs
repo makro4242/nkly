@@ -27,7 +27,7 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
     }
     public void evrakNoGetir()
     {
-        DataTable dt = f.GetDataTable("select isNUll(max(chh_evrakno_sira),0) from cari_hesap_hareketleri where chh_hareket_cinsi=1");
+        DataTable dt = f.GetDataTable("select isNUll(max(chh_evrakno_sira),0) from cari_hesap_hareketleri where chh_hareket_cinsi=0");
         int evrakNo = 0;
         if (dt != null && dt.Rows.Count > 0)
         {
@@ -102,6 +102,8 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
             {
                 aratoplam = Convert.ToDecimal(tutarBelirle(dtFiyatBilgileri.Rows[0]["sefer_miktarKG"], dtFiyatBilgileri.Rows[0]["sefer_miktarLT"], dtFiyatBilgileri.Rows[0]["lok_Fiyat_tip"], dtFiyatBilgileri.Rows[0]["lok_Fiyat"], dtFiyatBilgileri.Rows[0]["lok_paket"]));
             }
+
+
 
 
             decimal kdv = (aratoplam * 8 / 100);

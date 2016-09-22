@@ -41,7 +41,6 @@
 
     <!-- Begin page -->
     <div id="wrapper">
-        murat
         <!-- Top Bar Start -->
         <div class="topbar">
 
@@ -509,6 +508,7 @@
     <script type="text/javascript">
 
         function PrintElem(elem) {
+         
             Popup($(elem).html());
         }
 
@@ -516,14 +516,7 @@
             var mywindow = window.open('', 'mydiv', 'height=400,width=800');
             /*mywindow.document.write('<html><head><link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"></head><body onload="window.print()">' + data + '</body></html>');*/
             mywindow.document.write('<html><head>');
-            mywindow.document.write('<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />');
-            mywindow.document.write(' <link href="assets/css/core.css" rel="stylesheet" type="text/css" />');
-            mywindow.document.write('<link href="assets/css/components.css" rel="stylesheet" type="text/css" />');
-
-            mywindow.document.write('<link href="assets/css/icons.css" rel="stylesheet" type="text/css" />');
-            mywindow.document.write('<link href="assets/css/pages.css" rel="stylesheet" type="text/css" />');
-            mywindow.document.write('<link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />');
-            mywindow.document.write('<link href="assets/css/mycss.css" rel="stylesheet" />');
+            mywindow.document.write('<link href="assets/css/print.css" rel="stylesheet" />');
 
 
 

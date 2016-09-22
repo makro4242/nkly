@@ -161,7 +161,7 @@ public partial class Controls_SeferTanitim : System.Web.UI.UserControl
             }
             else
             {
-                string sorgu = "update seferler set Sefer_Kodu=" + f.Temizle(txtSeferSayisi.Text).tirnakla() + ",Sefer_Tarih=" + tarih.tirnakla() + ",Sefer_Personel=" + drpSeferPersoneli.SelectedValue.tirnakla() + ",Sefer_Cari=" + drpMusteri.SelectedValue.tirnakla() + ",Sefer_Arac=" + drpSeferArac.SelectedValue.tirnakla() + ",Sefer_lokasyon=" + drpSeferLokasyon.SelectedValue.tirnakla() + ",Sefer_MiktarKg=" + txtSeferMiktarKg.Text.tirnakla() + ",Sefer_MiktarLT=" + txtSeferMiktarLt.Text.tirnakla() + ",Sefer_BasKm=" + f.Temizle(txtBasKm.Text).tirnakla() + ",Sefer_BitKm=" + f.Temizle(txtBitKm.Text).tirnakla() + ",Sefer_AktifPasif=" + chcAktifPasif.Checked.ToString().tirnakla() + " where Id=" + f.Temizle(Request.QueryString["id"]);
+                string sorgu = "update seferler set Sefer_IrsaliyeNo=" +f.Temizle(txtIrsaliyeNo.Text).tirnakla() + ",Sefer_Kodu=" + f.Temizle(txtSeferSayisi.Text).tirnakla() + ",Sefer_Tarih=" + tarih.tirnakla() + ",Sefer_Personel=" + drpSeferPersoneli.SelectedValue.tirnakla() + ",Sefer_Cari=" + drpMusteri.SelectedValue.tirnakla() + ",Sefer_Arac=" + drpSeferArac.SelectedValue.tirnakla() + ",Sefer_lokasyon=" + drpSeferLokasyon.SelectedValue.tirnakla() + ",Sefer_MiktarKg=" + txtSeferMiktarKg.Text.tirnakla() + ",Sefer_MiktarLT=" + txtSeferMiktarLt.Text.tirnakla() + ",Sefer_BasKm=" + f.Temizle(txtBasKm.Text).tirnakla() + ",Sefer_BitKm=" + f.Temizle(txtBitKm.Text).tirnakla() + ",Sefer_AktifPasif=" + chcAktifPasif.Checked.ToString().tirnakla() + " where Id=" + f.Temizle(Request.QueryString["id"]);
                 int sonuc = f.cmd(sorgu);
                 if (sonuc > 0)
                 {
