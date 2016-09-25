@@ -426,6 +426,9 @@
             $(".datatable").dataTable({
                 "order": [[0, "desc"]]
             });
+            $("#datatable").dataTable({
+                "order": [[0, "desc"]]
+            });
             table = $('#dtSeferler').dataTable();
             $('#dtSeferler tbody').on('click', 'tr', function () {
 
