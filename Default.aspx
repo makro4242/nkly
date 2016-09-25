@@ -423,7 +423,9 @@
         var idler = [];
         $(document).ready(function () {
             $(".select2").select2();
-            $("#datatable").dataTable();
+            $(".datatable").dataTable({
+                "order": [[0, "desc"]]
+            });
             table = $('#dtSeferler').dataTable();
             $('#dtSeferler tbody').on('click', 'tr', function () {
 
@@ -508,7 +510,7 @@
     <script type="text/javascript">
 
         function PrintElem(elem) {
-         
+
             Popup($(elem).html());
         }
 

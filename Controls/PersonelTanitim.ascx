@@ -39,7 +39,7 @@
                             <div class="form-group">
                                 <label class="col-md-2 control-label">Telefonu</label>
                                 <div class="col-md-10">
-                                    <asp:TextBox runat="server" ID="txtPersonelTelefonu" class="form-control"  data-parsley-maxlength="20" placeholder="Telefonu Yazınız..."></asp:TextBox>
+                                    <asp:TextBox runat="server" ID="txtPersonelTelefonu" class="form-control" data-parsley-maxlength="20" placeholder="Telefonu Yazınız..."></asp:TextBox>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -54,6 +54,12 @@
                                     <asp:TextBox runat="server" ID="txtPersonelSifre" class="form-control" data-parsley-maxlength="7" placeholder="Personel Şifresini Yazınız..."></asp:TextBox>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Maaş</label>
+                                <div class="col-md-10">
+                                    <asp:TextBox runat="server" ID="txtMaas" class="form-control" placeholder="Personel Maaşını Yazınız..."></asp:TextBox>
+                                </div>
+                            </div>
                             <div class="form-group m-b-0">
                                 <div class="pull-right">
                                     <asp:Button ID="btnKaydet" runat="server" class="btn btn-info waves-light" OnClick="Kaydet" Text="Kaydet" />
@@ -66,37 +72,37 @@
             </div>
         </div>
     </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card-box">
-                    <table id="datatable" class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Kodu</th>
-                                <th>Adı Soyadı</th>
-                                <th>Bakiye</th>
-                                <th>İşlemler</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <asp:Repeater runat="server" ID="rptKayitlar">
-                                <ItemTemplate>
-                                    <tr>
-                                        <td><%#Eval("Personel_Kodu") %></td>
-                                        <td><%#Eval("Personel_AdiSoyadi")%></td>
-                                        <td></td>
-                                        <td>
-                                            <a href="Default.aspx?sayfa=PersonelTanitim&id=<%#Eval("Id")%>" class="btn btn-icon waves-effect waves-light btn-warning"><i class="fa fa-wrench"></i></a>
-                                            <a href="javascript:;" class="btn btn-default waves-effect waves-light" onclick="confirmSil(this,'<%#Eval("Id")%>','Personeller','Id')"><i class="fa fa-remove"></i></a>
-                                        </td>
-                                    </tr>
-                                </ItemTemplate>
-                            </asp:Repeater>
-                        </tbody>
-                    </table>
-                </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box">
+                <table id="datatable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Kodu</th>
+                            <th>Adı Soyadı</th>
+                            <th>Bakiye</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <asp:Repeater runat="server" ID="rptKayitlar">
+                            <ItemTemplate>
+                                <tr>
+                                    <td><%#Eval("Personel_Kodu") %></td>
+                                    <td><%#Eval("Personel_AdiSoyadi")%></td>
+                                    <td></td>
+                                    <td>
+                                        <a href="Default.aspx?sayfa=PersonelTanitim&id=<%#Eval("Id")%>" class="btn btn-icon waves-effect waves-light btn-warning"><i class="fa fa-wrench"></i></a>
+                                        <a href="javascript:;" class="btn btn-default waves-effect waves-light" onclick="confirmSil(this,'<%#Eval("Id")%>','Personeller','Id')"><i class="fa fa-remove"></i></a>
+                                    </td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
 </div>
 
 <!-- container -->

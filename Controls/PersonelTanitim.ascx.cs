@@ -43,7 +43,7 @@ public partial class PersonelTanitim : System.Web.UI.UserControl
 
                 if (Request.QueryString["id"] == null)
                 {
-                    string sorgu = "INSERT INTO [dbo].[Personeller]([Personel_Kodu],[Personel_AdiSoyadi],[Personel_Telefonu],[Personel_Adresi])VALUES('" + txtPersonelKodu.Text.ToUpper() + "','" + f.Temizle(txtPersonelAdiSoyadi.Text.ToUpper()) + "','" + f.Temizle(txtPersonelTelefonu.Text.ToUpper()) + "','" + f.Temizle(txtPersonelAdresi.Text.ToUpper()) + "')";
+                    string sorgu = "INSERT INTO [dbo].[Personeller]([Personel_Kodu],[Personel_AdiSoyadi],[Personel_Telefonu],[Personel_Adresi],Personel_Maasi)VALUES('" + txtPersonelKodu.Text.ToUpper() + "','" + f.Temizle(txtPersonelAdiSoyadi.Text.ToUpper()) + "','" + f.Temizle(txtPersonelTelefonu.Text.ToUpper()) + "','" + f.Temizle(txtPersonelAdresi.Text.ToUpper()) + "','" + f.Temizle(txtMaas.Text) + "')";
                     int sonuc = f.cmd(sorgu);
                     if (sonuc > 0)
                     {
@@ -58,7 +58,7 @@ public partial class PersonelTanitim : System.Web.UI.UserControl
                 }
                 else
                 {
-                    string sorgu = "UPDATE [dbo].[Personeller] SET [Personel_Kodu]=" + f.Temizle(txtPersonelKodu.Text.ToUpper()).tirnakla() + ",[Personel_AdiSoyadi]=" + f.Temizle(txtPersonelAdiSoyadi.Text.ToUpper()).tirnakla() + ",[Personel_Telefonu]=" + f.Temizle(txtPersonelTelefonu.Text).tirnakla() + ",[Personel_Adresi]=" + f.Temizle(txtPersonelAdresi.Text.ToUpper()).tirnakla() + " where Id=" + Request.QueryString["id"];
+                    string sorgu = "UPDATE [dbo].[Personeller] SET [Personel_Kodu]=" + f.Temizle(txtPersonelKodu.Text.ToUpper()).tirnakla() + ",[Personel_AdiSoyadi]=" + f.Temizle(txtPersonelAdiSoyadi.Text.ToUpper()).tirnakla() + ",[Personel_Telefonu]=" + f.Temizle(txtPersonelTelefonu.Text).tirnakla() + ",[Personel_Adresi]=" + f.Temizle(txtPersonelAdresi.Text.ToUpper()).tirnakla() + ",personel_maasi=" + f.Temizle(txtMaas.Text).tirnakla() + " where Id=" + Request.QueryString["id"];
                     int sonuc = f.cmd(sorgu);
                     if (sonuc > 0)
                     {

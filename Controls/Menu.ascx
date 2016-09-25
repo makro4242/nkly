@@ -27,13 +27,13 @@
                 <li class="has_sub">
                     <a href="#" class="waves-effect"><i class="ti-home"></i><span>Raporlar </span></a>
                     <ul class="list-unstyled">
-                        <li><a href="Default.aspx">Araç listesi</a></li>
-                        <li><a href="Default.aspx">Personel listesi</a></li>
-                        <li><a href="Default.aspx">Cari listesi</a></li>
-                        <li><a href="Default.aspx">Masraf listesi</a></li>
+                        <li><a href="Default.aspx?sayfa=arac-listesi">Araç listesi</a></li>
+                        <li><a href="Default.aspx?sayfa=personel-listesi">Personel listesi</a></li>
+                        <li><a href="Default.aspx?sayfa=cari-listesi">Cari listesi</a></li>
+                        <li><a href="Default.aspx?sayfa=masraf-listesi">Masraf listesi</a></li>
                         <li><a href="Default.aspx">Sefer listesi(Tarih Bazlı)</a></li>
-                        <li><a href="Default.aspx">Karlılık Raporu(Tarih Bazlı(Müşteri,Şoför,Araç,Sefer))</a></li>
-                        <li><a href="Default.aspx">Masraf Raporu(Tarih Bazlı(Müşteri,Şoför,Araç,Sefer))</a></li>
+                        <li><a href="Default.aspx?sayfa=karlilikraporu">Karlılık Raporu<br />Tarih Bazlı<br />(Müşteri,Şoför,Araç,Sefer)</a></li>
+                        <li><a href="Default.aspx">Masraf Raporu<br />Tarih Bazlı<br />(Müşteri,Şoför,Araç,Sefer)</a></li>
                     </ul>
                 </li>
                 <li>
