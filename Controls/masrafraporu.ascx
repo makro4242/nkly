@@ -1,11 +1,10 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="KarlilikRaporu.ascx.cs" Inherits="Controls_KarlilikRaporu" %>
-
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="masrafraporu.ascx.cs" Inherits="Controls_masrafraporu" %>
 <asp:Panel runat="server" ID="pnlContainer" class="container">
 
     <!-- Page-Title -->
     <div class="row">
         <div class="col-sm-12">
-            <h4 class="page-title">Karlılık Raporu</h4>
+            <h4 class="page-title">Masraf Raporu</h4>
             <ol class="breadcrumb">
                 <li>
                     <a href="Default.aspx">Ana Sayfa</a>

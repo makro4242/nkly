@@ -66,8 +66,20 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12">Araç</label>
                                     <div class="col-md-12">
-                                        <select name="aracPlaka" id="drpArac" required class="form-control select2 temizle">
+                                        <select name="aracPlaka" id="drpArac" class="form-control select2 temizle">
                                             <%=drpAraclar %>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-2">
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-12">Personel</label>
+                                    <div class="col-md-12">
+                                        <select name="personelKodu" id="drpPersonel" class="form-control select2 temizle">
+                                            <%=drpPersoneller %>
                                         </select>
                                     </div>
                                 </div>
@@ -100,7 +112,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-12">KM</label>
                                     <div class="col-md-12">
-                                        <input type="text" data-parsley-type="number" required id="txtKm" name="km" class="form-control text-right temizle" />
+                                        <input type="text" data-parsley-type="number" id="txtKm" name="km" class="form-control text-right temizle" />
                                     </div>
                                 </div>
                             </div>
@@ -120,23 +132,25 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <div class="form-group">
-                                    <label class="control-label col-md-12">KDV Hariç Tutar</label>
+                                    <label class="control-label col-md-12">Tutar</label>
                                     <div class="col-md-12">
                                         <input type="text" data-parsley-type="number" required id="txtTutar" name="tutar" class="form-control text-right temizle" />
-
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-1">
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1 pull-right">
                                 <label class="control-label col-md-12">&nbsp;</label>
                                 <button class="btn btn-info waves-light pull-right msrfEkle">EKLE</button>
                             </div>
-
                         </div>
                         <hr />
-                        
+
                     </form>
                     <div class="col-md-12 masrafListele"></div>
                     <hr />

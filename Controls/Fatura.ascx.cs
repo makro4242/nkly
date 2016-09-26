@@ -46,7 +46,7 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
             txtEvrakNo.Text = sayi.ToString();
         }
     }
-    public string tutarBelirle(object seferMiktarKg, object SeferMiktarLt, object FiyatTip, object fiyat, object lok_Paket)
+    public float tutarBelirle(object seferMiktarKg, object SeferMiktarLt, object FiyatTip, object fiyat, object lok_Paket)
     {
         decimal tutar = 0;
         fiyat = fiyat.ToString().Replace(".", ",");
@@ -66,7 +66,7 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
             tutar = Convert.ToDecimal(fiyat);
         }
 
-        return tutar.ToString();
+        return (float)tutar;
     }
     public void seferleriGetir()
     {
@@ -109,7 +109,7 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
             decimal kdv = (aratoplam * 8 / 100);
             decimal gentoplam = aratoplam + kdv;
             string seferno = item;
-            sorgu += tarih + "," + HareketCinsi + "," + evraknoseri + "," + evraknosira + "," + caricins + "," + carikodu + "," + aratoplam.ToString().Replace(",", ".").tirnakla() + "," + kdv.ToString().Replace(",", ".").tirnakla() + "," + gentoplam.ToString().Replace(",", ".").tirnakla() + "," + seferno + "," + aracPlaka + ",0";
+            sorgu += tarih + "," + HareketCinsi + "," + evraknoseri + "," + evraknosira + "," + caricins + "," + carikodu + "," + aratoplam.ToString().Replace(",", ".").tirnakla() + "," + kdv.ToString().Replace(",", ".").tirnakla() + "," + gentoplam.ToString().Replace(",", ".").tirnakla() + "," + seferno + "," + aracPlaka;
             sorgu += ")";
             f.cmd(sorgu);
             f.cmd("update seferler set sefer_fatura=" + f.Temizle(txtEvrakNo.Text).tirnakla() + ", sefer_aktifPasif=0 where sefer_kodu=" + item);

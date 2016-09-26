@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
 {
     MyFonksiyon f = new MyFonksiyon();
-    public string drpCariler = "", drpAraclar = "", drpMasraflar = "";
+    public string drpCariler = "", drpAraclar = "", drpMasraflar = "", drpPersoneller = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
@@ -17,6 +17,7 @@ public partial class Controls_EvrakMasrafFaturasi : System.Web.UI.UserControl
             dropDownGetir("masraflar", "masraf_aciklama", "masraf_kodu", ref drpMasraflar);
             dropDownGetir("araclar", "arac_plaka", "arac_plaka", ref drpAraclar);
             dropDownGetir("Cariler", "Cari_Unvan", "Cari_Kodu", ref drpCariler);
+            dropDownGetir("Personeller", "Personel_AdiSoyadi", "Personel_Kodu", ref drpPersoneller);
 
 
             faturaListele();

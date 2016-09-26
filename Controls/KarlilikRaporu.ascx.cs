@@ -33,11 +33,16 @@ public partial class Controls_KarlilikRaporu : System.Web.UI.UserControl
     {
         panelleriKapat();
         myDbHelper db = new myDbHelper(new sqlDbHelper());
+        string kolon = "aratoplam";
+        if (rdbKdvli.Checked)
+        {
+            kolon = "geneltoplam";
+        }
 
         if (drpKriterListesi.SelectedValue.ToString() == "0")
         {
             pnlAraclar.Visible = true;
-            DataTable dt = f.GetDataTable("with chh (chh_AracPlaka, chh_aratoplam) as (select chh_AracPlaka, sum(chh_aratoplam) from cari_hesap_hareketleri where chh_tarihi between " + txtilkTarih.Text.tirnakla() + " and " + txtSonTarih.Text.tirnakla() + " group by chh_AracPlaka), mh (msr_arac_plaka, msr_aratoplam) as (select msr_arac_plaka, sum(msr_aratoplam) from masraf_hareketleri where msr_tarihi between " + txtilkTarih.Text.tirnakla() + " and " + txtSonTarih.Text.tirnakla() + " group by msr_arac_plaka) select g.chh_AracPlaka, g.chh_aratoplam as SatisToplam,coalesce(c.msr_aratoplam, 0) as MasrafToplam, g.chh_aratoplam - coalesce(c.msr_aratoplam, 0) as Fark from chh g left join mh c on g.chh_AracPlaka = c.msr_arac_plaka");
+            DataTable dt = f.GetDataTable("with chh (chh_AracPlaka, chh_" + kolon + ") as (select chh_AracPlaka, sum(chh_" + kolon + ") from cari_hesap_hareketleri where chh_hareket_cinsi=0 and chh_tarihi between '2000-01-01' and " + txtSonTarih.Text.tirnakla() + " group by chh_AracPlaka), mh (msr_arac_plaka, msr_" + kolon + ") as (select msr_arac_plaka, sum(msr_" + kolon + ") from masraf_hareketleri where msr_tarihi between '2000-01-01' and " + txtSonTarih.Text.tirnakla() + " group by msr_arac_plaka) select g.chh_AracPlaka, g.chh_" + kolon + " as SatisToplam,coalesce(c.msr_" + kolon + ", 0) as MasrafToplam, (g.chh_" + kolon + ") - coalesce(c.msr_" + kolon + ", 0) as Fark from chh g left join mh c on g.chh_AracPlaka = c.msr_arac_plaka");
             dt.Columns.Add(new DataColumn("test"));
             if (dt != null && dt.Rows.Count > 0)
             {
@@ -47,8 +52,8 @@ public partial class Controls_KarlilikRaporu : System.Web.UI.UserControl
         }
         else if (drpKriterListesi.SelectedValue == "1")
         {
-            string sorgu = "with chh(personel_adisoyadi,sefer_personel,chh_geneltoplam) as (select p.personel_adisoyadi,s.sefer_personel, sum(c.chh_geneltoplam) from seferler s, cari_hesap_hareketleri c,personeller p where s.sefer_personel=p.personel_kodu and s.sefer_kodu=c.chh_seferno and chh_tarihi between @tarih1 and @tarih2 group by sefer_personel,personel_adisoyadi),mh(msr_personel_kodu,msr_geneltoplam) as (select msr_personel_kodu,sum(msr_geneltoplam) from masraf_hareketleri where msr_tarihi between @tarih1 and @tarih2 group by msr_personel_kodu) select chh.personel_adisoyadi,chh.sefer_personel,(chh.chh_geneltoplam-coalesce(mh.msr_geneltoplam, 0)) as fark from chh left join mh  on chh.sefer_personel = mh.msr_personel_kodu";
-            DataTable dt = db.exReaderDT(CommandType.Text, sorgu, "tarih1=" + txtilkTarih.Text + ",tarih2=" + txtSonTarih.Text);
+            string sorgu = "with ch(gelir,personel_kodu) as (select sum(c.chh_genelToplam),s.sefer_personel from cari_hesap_hareketleri c,seferler s where c.chh_tarihi between '2010-01-01' and @tarih and c.chH_seferNo=s.sefer_kodu group by s.sefer_personel),mh(gider,personel_kodu) as (select sum(msr_geneltoplam),msr_personel_kodu from masraf_hareketleri where msr_tarihi between '2010-01-01' and @tarih group by msr_personel_kodu) select ch.gelir-mh.gider as fark,ch.personel_kodu from ch,mh where ch.personel_kodu=mh.personel_kodu";
+            DataTable dt = db.exReaderDT(CommandType.Text, sorgu, "tarih=" + txtSonTarih.Text);
             if (dt != null)
             {
                 rptPersonel.DataSource = dt;
@@ -57,10 +62,7 @@ public partial class Controls_KarlilikRaporu : System.Web.UI.UserControl
             }
         }
     }
-    public string kolonlariYaz()
-    {
-        return "<td>Murat</td><td>Dere</td>";
-    }
+   
 
     public void drpKriterlistesiicin()
     {

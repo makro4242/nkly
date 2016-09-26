@@ -76,10 +76,10 @@
                                                     <td><%#Eval("Cari_Unvan") %></td>
                                                     <td><%# String.Format("{0:N}", Eval("Sefer_miktarKG")) %></td>
                                                     <td><%# String.Format("{0:N}", Eval("Sefer_miktarLT")) %></td>
-                                                    <td><%#String.Format("{0:N}",Eval("Fiyat").ToString()) %></td>
-                                                    <td style="display: none;"><%#Eval("Fiyat") %></td>
+                                                    <td><%#String.Format("{0:F2}",(float)Convert.ToDouble(Eval("Fiyat"))) %></td>
+                                                    <td style="display: none;"><%#(float)Convert.ToDouble(Eval("Fiyat")) %></td>
                                                     <td><%#String.Format("{0:N}", tutarBelirle(Eval("sefer_miktarKg"),Eval("sefer_miktarLT"),Eval("Lok_fiyat_tip"),Eval("Fiyat"),Eval("lok_Paket")))%></td>
-                                                    <td style="display: none;"><%#tutarBelirle(Eval("sefer_miktarKg"),Eval("sefer_miktarLT"),Eval("Lok_fiyat_tip"),Eval("Fiyat"),Eval("lok_Paket")).Replace(",",".")%></td>
+                                                    <td style="display: none;"><%#tutarBelirle(Eval("sefer_miktarKg"),Eval("sefer_miktarLT"),Eval("Lok_fiyat_tip"),Eval("Fiyat"),Eval("lok_Paket")).ToString().Replace(",",".")%></td>
                                                     <td><%#Eval("Sefer_IrsaliyeNo") %></td>
                                                     <td><%#Eval("arac_plaka") %></td>
                                                     <td><%#Eval("Sefer_bitkm") %></td>

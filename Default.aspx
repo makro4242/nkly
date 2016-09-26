@@ -333,6 +333,7 @@
                         var element = $("<div class='row'></div>");
                         $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>" + msrf["masraf"] + "</label></div>");
                         $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>" + msrf["arac"] + "</label></div>");
+                        $(element).append("<div class='col-md-2'><label class='col-md-12 control-label'>" + msrf["personel"] + "</label></div>");
                         $(element).append("<div class='col-md-2 text-center'><label class='col-md-12 control-label'>" + msrf["taksit"] + "</label></div>");
                         $(element).append("<div class='col-md-1 text-center'><label class='col-md-12 control-label'>" + msrf["Km"] + "</label></div>");
                         $(element).append("<div class='col-md-2 text-center'><label class='col-md-12 control-label'>%   " + msrf["KDV"] + "</label></div>");
@@ -354,6 +355,7 @@
                     },
                     error: function () {
                         ShowMessageBox("error", "", "Kayıt yapılamıyor");
+                        $('.msrfEkle').attr("disabled", true);
                     }
                 });
                 return false;
@@ -423,9 +425,7 @@
         var idler = [];
         $(document).ready(function () {
             $(".select2").select2();
-            $(".datatable").dataTable({
-                "order": [[0, "desc"]]
-            });
+
             $("#datatable").dataTable({
                 "order": [[0, "desc"]]
             });
@@ -434,7 +434,9 @@
 
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
-                    araToplam -= parseFloat($(this).find('td').eq(9).text());
+                    var t = parseFloat($(this).find('td').eq(9).text());
+                    araToplam -= yuvarla(t, 2);
+                    console.log("çıkart", yuvarla(t, 2));
                     var removeItem = $(this).find('td').eq(0).text();
                     idler = jQuery.grep(idler, function (value) {
                         return value != removeItem;
@@ -444,11 +446,12 @@
                 else {
                     $(this).addClass('selected');
                     idler.push($(this).find('td').eq(0).text());
-                    araToplam += parseFloat($(this).find('td').eq(9).text());
-
+                    araToplam += yuvarla(parseFloat($(this).find('td').eq(9).text()), 2);
+                    console.log("ekle " + yuvarla(parseFloat($(this).find('td').eq(9).text()), 2));
 
                 }
-                kdv = araToplam * 8 / 100;
+                araToplam = yuvarla(araToplam, 2);
+                kdv = parseFloat(araToplam * 8 / 100);
                 kdv = yuvarla(kdv, 2);
                 genToplam = araToplam + kdv;
 
@@ -483,7 +486,8 @@
                 return false;
             }
         }
-        function formatYap(deger) {
+        function formatYap(gelen) {
+            var deger = gelen;
             deger = deger.toString();
             var dizi = deger.split(".");
             deger = dizi[0];

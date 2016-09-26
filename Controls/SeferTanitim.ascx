@@ -118,7 +118,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box">
-                <table id="datatable" class="table table-striped table-bordered myTable">
+                <table id="datatable" class="table datatable table-striped table-bordered myTable">
                     <thead>
                         <tr>
                             <th>Kodu</th>

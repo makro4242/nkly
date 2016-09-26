@@ -21,6 +21,7 @@
                     <a href="#" class="waves-effect"><i class="ti-home"></i><span>Evraklar </span></a>
                     <ul class="list-unstyled">
                         <li><a href="Default.aspx?sayfa=Fatura">Fatura</a></li>
+                        <li><a href="Default.aspx?sayfa=fatura-sec"">Fatura Yazdır</a></li>
                         <li><a href="Default.aspx?sayfa=EvrakMasrafFaturasi">Masraf</a></li>
                     </ul>
                 </li>
@@ -33,12 +34,10 @@
                         <li><a href="Default.aspx?sayfa=masraf-listesi">Masraf listesi</a></li>
                         <li><a href="Default.aspx">Sefer listesi(Tarih Bazlı)</a></li>
                         <li><a href="Default.aspx?sayfa=karlilikraporu">Karlılık Raporu<br />Tarih Bazlı<br />(Müşteri,Şoför,Araç,Sefer)</a></li>
-                        <li><a href="Default.aspx">Masraf Raporu<br />Tarih Bazlı<br />(Müşteri,Şoför,Araç,Sefer)</a></li>
+                        <li><a href="Default.aspx">Masraf Raporu<br />Tarih Bazlı<br />(Şoför,Araç,Sefer)</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="default.aspx?sayfa=fatura-sec" class="waves-effect"><i class="ti-printer"></i><span>Fatura Yazdır </span></a>
-                </li>
+              
             </ul>
             <div class="clearfix"></div>
         </div>

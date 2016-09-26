@@ -23,6 +23,7 @@ public class service : System.Web.Services.WebService
     {
         public string masraf { get; set; }
         public string arac { get; set; }
+        public string personel { get; set; }
         public string taksit { get; set; }
         public string Km { get; set; }
         public string KDV { get; set; }
@@ -41,7 +42,7 @@ public class service : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public string evrakMasraf(string evrakNo, string faturaTarihi, string cariKodu, string masrafKodu, string aracPlaka, string taksitSayisi, string km, string kdv, string tutar)
+    public string evrakMasraf(string evrakNo, string faturaTarihi, string cariKodu, string masrafKodu, string aracPlaka, string personelKodu, string taksitSayisi, string km, string kdv, string tutar)
     {
 
         masrafEvrak me = new masrafEvrak();
@@ -55,9 +56,9 @@ public class service : System.Web.Services.WebService
         decimal tutarKdv = Math.Round((tutarSayi * kdvSayi / 100), 2);
         decimal tutarToplam = tutarSayi + tutarKdv;
 
-        string insert = "INSERT INTO [cari_hesap_hareketleri] values(@tarih,@cins,@evrakNo,@evrakSira,@cariCins,@cariKodu,@araToplam,@kdv,@genelToplam,@seferNo,@arac,@km)";
+        string insert = "INSERT INTO [cari_hesap_hareketleri] values(@tarih,@cins,@evrakNo,@evrakSira,@cariCins,@cariKodu,@araToplam,@kdv,@genelToplam,@seferNo,@arac)";
 
-        string prm = "tarih=" + tarih + ",cins=" + cins + ",evrakNo=" + evrakNoSeri.stringKaldir() + ",evrakSira=" + evrakNo.stringKaldir() + ",cariCins=0,cariKodu=" + cariKodu.stringKaldir() + ",araToplam=" + tutarSayi.ToString().Replace(",", ".").stringKaldir() + ",kdv=" + tutarKdv.ToString().Replace(",", ".").stringKaldir() + ",geneltoplam=" + tutarToplam.ToString().Replace(",", ".").stringKaldir() + ",seferNo=0,arac=" + aracPlaka.stringKaldir() + ",km=" + km.stringKaldir() + ",plaka=" + aracPlaka.stringKaldir();
+        string prm = "tarih=" + tarih + ",cins=" + cins + ",evrakNo=" + evrakNoSeri.stringKaldir() + ",evrakSira=" + evrakNo.stringKaldir() + ",cariCins=0,cariKodu=" + cariKodu.stringKaldir() + ",araToplam=" + tutarSayi.ToString().Replace(",", ".").stringKaldir() + ",kdv=" + tutarKdv.ToString().Replace(",", ".").stringKaldir() + ",geneltoplam=" + tutarToplam.ToString().Replace(",", ".").stringKaldir() + ",seferNo=0,arac=" + aracPlaka.stringKaldir();
         int sonuc = db.nonQuery(CommandType.Text, insert, prm);
         if (sonuc == 1)
         {
@@ -66,8 +67,8 @@ public class service : System.Web.Services.WebService
             decimal taksitToplam = Math.Round((taksitTutar + taksitKdv), 2);
             for (int i = 0; i < taksitAy; i++)
             {
-                insert = "INSERT INTO [Masraf_Hareketleri] values(@tarih,@cins,@evrakNo,@evrakSira,@masrafKodu,@araToplam,@kdv,@genelToplam,@seferNo,@arac,@km,(select personel_kodu from personeller where Id=(select arac_zimmet from araclar where arac_plaka=@plaka)))";
-                prm = "tarih=" + tarih + ",cins=" + cins + ",evrakNo=" + evrakNoSeri.stringKaldir() + ",evrakSira=" + evrakNo.stringKaldir() + ",masrafKodu=" + masrafKodu.stringKaldir() + ",araToplam=" + taksitTutar.ToString().stringKaldir() + ",kdv=" + taksitKdv.ToString().stringKaldir() + ",geneltoplam=" + taksitToplam.ToString().stringKaldir() + ",seferNo=0,arac=" + aracPlaka.stringKaldir() + ",km=" + km.stringKaldir() + ",plaka=" + aracPlaka.stringKaldir();
+                insert = "INSERT INTO [Masraf_Hareketleri] values(@tarih,@cins,@evrakNo,@evrakSira,@masrafKodu,@araToplam,@kdv,@genelToplam,@seferNo,@arac,@km,@personel)";
+                prm = "tarih=" + tarih + ",cins=" + cins + ",evrakNo=" + evrakNoSeri.stringKaldir() + ",evrakSira=" + evrakNo.stringKaldir() + ",masrafKodu=" + masrafKodu.stringKaldir() + ",araToplam=" + taksitTutar.ToString().Replace(",", ".").stringKaldir() + ",kdv=" + taksitKdv.ToString().Replace(",", ".").stringKaldir() + ",geneltoplam=" + taksitToplam.ToString().Replace(",", ".").stringKaldir() + ",seferNo=0,arac=" + aracPlaka.stringKaldir() + ",km=" + km.stringKaldir() + ",personel=" + personelKodu.stringKaldir();
                 db.nonQuery(CommandType.Text, insert, prm);
             }
             string toplamSorgu = "select sum(msr_araToplam) as araToplam,sum(msr_kdv) as kdvToplam,sum(msr_genelToplam) as genelToplam from masraf_hareketleri where msr_tarihi=@tarih and msr_evrakno_sira=@evrakNo";
@@ -81,12 +82,11 @@ public class service : System.Web.Services.WebService
 
             me.masraf = db.exReaderTekSutun(CommandType.Text, "select masraf_aciklama from masraflar where masraf_kodu=@kod", "kod=" + masrafKodu);
             me.arac = aracPlaka;
+            me.personel = db.exReaderTekSutun(CommandType.Text, "select personel_adisoyadi where personel_kodu=@personel", "personel=" + personelKodu);
             me.taksit = taksitSayisi;
             me.Km = km;
             me.KDV = kdv;
             me.tutar = tutar;
-
-
 
         }
 
