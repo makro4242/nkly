@@ -82,14 +82,14 @@
                         <thead>
                             <tr>
                                 <th>Plaka</th>
-                                <th>Kar</th>
+                                <th>Masraf</th>
                             </tr>
                         </thead>
                         <tbody>
                             <asp:Repeater runat="server" ID="rptAracKayitlari">
                                 <ItemTemplate>
                                     <tr>
-                                        <td><%#Eval("chh_AracPlaka") %></td>
+                                        <td><%#Eval("msr_arac_plaka") %></td>
                                         <td><%#String.Format("{0:N}",Eval("Fark"))%></td>
                                     </tr>
                                 </ItemTemplate>
@@ -119,7 +119,7 @@
                                 <ItemTemplate>
                                     <tr>
                                         <td><%#Eval("personel_kodu") %></td>
-                                        <td><%#Eval("personel_kodu") %></td>
+                                        <td><%#Eval("personel_adisoyadi") %></td>
                                         <td><%#Eval("Fark") %></td>
                                     </tr>
                                 </ItemTemplate>

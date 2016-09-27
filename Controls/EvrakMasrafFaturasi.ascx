@@ -216,7 +216,7 @@
                             <ItemTemplate>
                                 <tr>
                                     <td><%#Eval("chh_evrakno_sira") %></td>
-                                    <td><%#Eval("chh_tarihi")%></td>
+                                    <td><%#Eval("chh_tarihi").ToString().Split(' ')[0]%></td>
                                     <td><%#Eval("cari_unvan")%></td>
                                     <td><%#Eval("araToplam")%></td>
                                     <td><%#Eval("kdv")%></td>

@@ -11,7 +11,10 @@ public partial class Controls_masrafraporu : System.Web.UI.UserControl
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!Page.IsPostBack)
+        {
+            drpKriterlistesiicin();
+        }
     }
     protected void Raporla(object sender, EventArgs e)
     {
@@ -26,7 +29,7 @@ public partial class Controls_masrafraporu : System.Web.UI.UserControl
         if (drpKriterListesi.SelectedValue == "0")
         {
             pnlAraclar.Visible = true;
-            string sorgu = "select sum(msr_" + kolon + "),msr_arac_plaka from masraf_hareketleri where msr_arac_plaka!='' and msr_tarihi between @tarih1 and @tarih2 group by msr_arac_plaka";
+            string sorgu = "select sum(msr_" + kolon + ") as fark,msr_arac_plaka from masraf_hareketleri where msr_arac_plaka!='' and msr_tarihi between @tarih1 and @tarih2 group by msr_arac_plaka";
             DataTable dt = db.exReaderDT(CommandType.Text, sorgu, "tarih1=" + txtilkTarih.Text + ",tarih2=" + txtSonTarih.Text);
             if (dt != null)
             {
@@ -36,7 +39,14 @@ public partial class Controls_masrafraporu : System.Web.UI.UserControl
         }
         else if (drpKriterListesi.SelectedValue == "1")
         {
-
+            pnlPersonel.Visible = true;
+            string sorgu = "select sum(m.msr_" + kolon + ") as fark,m.msr_personel_kodu as personel_kodu,p.personel_adisoyadi from masraf_hareketleri m,personeller p where p.personel_kodu=m.msr_personel_kodu and msr_personel_kodu!=0 and msr_tarihi between @tarih1 and @tarih2 group by m.msr_personel_kodu,p.personel_adisoyadi";
+            DataTable dt = db.exReaderDT(CommandType.Text, sorgu, "tarih1=" + txtilkTarih.Text + ",tarih2=" + txtSonTarih.Text);
+            if (dt != null)
+            {
+                rptPersonel.DataSource = dt;
+                rptPersonel.DataBind();
+            }
         }
     }
     public void drpKriterlistesiicin()

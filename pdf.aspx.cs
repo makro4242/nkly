@@ -104,7 +104,7 @@ public partial class pdf : System.Web.UI.Page
             File.Delete(Server.MapPath("~/images/" + dosya));
         }
         Rectangle mySize = new Rectangle(PageSize.A4.Width, 297.5f);
-        iTextSharp.text.Document pdfDosya = new iTextSharp.text.Document(mySize, 0, 0, 24, 0);
+        iTextSharp.text.Document pdfDosya = new iTextSharp.text.Document(mySize, 0, 0, 28, 0);
         PdfWriter writer = PdfWriter.GetInstance(pdfDosya, new FileStream(Server.MapPath("~/images/" + dosya), FileMode.CreateNew));
         myList lst = new myList(writer, pdfDosya);
         return lst;
@@ -122,7 +122,7 @@ public partial class pdf : System.Web.UI.Page
 
         PdfPCell cell = new PdfPCell(new Phrase(cari, fontArial));
         cell.Border = 0;
-        cell.PaddingLeft = 50;
+        cell.PaddingLeft = 55;
         cell.Colspan = 1;
         cell.HorizontalAlignment = 0;
         table.AddCell(cell);
@@ -131,17 +131,17 @@ public partial class pdf : System.Web.UI.Page
 
 
         cell = new PdfPCell(new Phrase(cariAdres, fontArial));
-        cell.PaddingLeft = 50;
+        cell.PaddingLeft = 55;
         cell.Colspan = 1;
         cell.Border = 0;
         cell.HorizontalAlignment = 0;
         table.AddCell(cell);
         table.AddCell(new Phrase(""));
 
-        cell = new PdfPCell(new Phrase(tarih + Environment.NewLine + Environment.NewLine + belgeNo, fontArialKucuk));
+        cell = new PdfPCell(new Phrase(tarih + Environment.NewLine + belgeNo, fontArialKucuk));
         cell.Border = 0;
         cell.HorizontalAlignment = 0;
-        cell.PaddingTop = 25;
+        cell.PaddingTop = 15;
         table.AddCell(cell);
 
         return table;
@@ -149,9 +149,9 @@ public partial class pdf : System.Web.UI.Page
 
     public PdfPTable footerTableGEtir(float araToplam, float kdv, float genelToplam)
     {
-        PdfPTable tabFot = new PdfPTable(new float[] { 290, 65, 60, 60 });
+        PdfPTable tabFot = new PdfPTable(new float[] { 235, 65, 90, 80 });
         tabFot.DefaultCell.Border = 0;
-        tabFot.TotalWidth = 515;
+        tabFot.TotalWidth = 560;
         tabFot.LockedWidth = true;
         PdfPCell cell = new PdfPCell(new Phrase("Yalnız Bin Beşyüzelli. TL Elliiki Kr.", fontArial));
         cell.Border = 0;
@@ -170,12 +170,13 @@ public partial class pdf : System.Web.UI.Page
 
         cell = new PdfPCell(new Phrase(String.Format("{0:N}", araToplam), fontArialKucuk));
         cell.Border = 0;
+        cell.PaddingRight = 30;
         cell.HorizontalAlignment = 2;
         tabFot.AddCell(cell);
 
 
 
-        cell = new PdfPCell(new Phrase("Banka İban Bilgilerimiz Süleyman POÇAN" , fontArial));
+        cell = new PdfPCell(new Phrase("Banka İban Bilgilerimiz Süleyman POÇAN", fontArial));
         cell.Border = 0;
         cell.PaddingLeft = 40;
         cell.HorizontalAlignment = 0;
@@ -197,12 +198,13 @@ public partial class pdf : System.Web.UI.Page
         cell = new PdfPCell(new Phrase(String.Format("{0:N}", kdv), fontArialKucuk));
         cell.Border = 0;
         cell.HorizontalAlignment = 2;
+        cell.PaddingRight = 30;
         tabFot.AddCell(cell);
 
 
 
-        cell = new PdfPCell(new Phrase("TEB KONYA Şubesi TR02 0003 2000 0000 0032 7094 49" , fontArial));
-      
+        cell = new PdfPCell(new Phrase("TEB KONYA Şubesi TR02 0003 2000 0000 0032 7094 49", fontArial));
+
         cell.Border = 0;
         cell.PaddingLeft = 40;
         cell.HorizontalAlignment = 0;
@@ -210,12 +212,14 @@ public partial class pdf : System.Web.UI.Page
 
         tabFot.AddCell(new Phrase(""));
 
-        cell = new PdfPCell(new Phrase("Genel Toplam", fontArialKucuk));
+        cell = new PdfPCell(new Phrase("GENEL TOPLAM", fontArialKucuk));
         cell.Border = 0;
         cell.HorizontalAlignment = 0;
+
         tabFot.AddCell(cell);
         cell = new PdfPCell(new Phrase(String.Format("{0:N}", genelToplam), fontArialKucuk));
         cell.Border = 0;
+        cell.PaddingRight = 30;
         cell.HorizontalAlignment = 2;
         tabFot.AddCell(cell);
 
@@ -226,10 +230,10 @@ public partial class pdf : System.Web.UI.Page
     public PdfPTable hizmetSatirGetir(DataTable dt)
     {
         PdfPTable table = new PdfPTable(4);
-        table.SpacingBefore = 50;
+        table.SpacingBefore = 40;
         table.DefaultCell.Border = 0;
-        table.SetWidths(new float[] { 290, 65, 60, 60 });
-        table.TotalWidth = 515;
+        table.SetWidths(new float[] { 235, 65, 90, 80 });
+        table.TotalWidth = 560;
         table.LockedWidth = true;
 
         foreach (DataRow item in dt.Rows)
@@ -255,6 +259,7 @@ public partial class pdf : System.Web.UI.Page
             float araToplam = (float)Convert.ToDouble(item["chh_aratoplam"]);
             cell = new PdfPCell(new Phrase(String.Format("{0:N}", araToplam), fontArialKucuk));
             cell.Border = 0;
+            cell.PaddingRight = 30;
             cell.HorizontalAlignment = 2;
             table.AddCell(cell);
         }
