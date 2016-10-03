@@ -19,7 +19,7 @@ public partial class Controls_LokasyonCariFiyatTanitim : System.Web.UI.UserContr
             rdbKG.Checked = true;
             carileriGetir();
             LokasyonlariGetir();
-            if (Request.QueryString["id"]!=null)
+            if (Request.QueryString["id"] != null)
             {
                 bilgileriGetir();
             }
@@ -36,8 +36,12 @@ public partial class Controls_LokasyonCariFiyatTanitim : System.Web.UI.UserContr
             byte tip = Convert.ToByte(dt.Rows[0]["Lok_Fiyat_tip"]);
             rdbKG.Checked = tip == 1 ? true : false;
             rdbLT.Checked = tip == 0 ? true : false;
-            byte paket = Convert.ToByte(dt.Rows[0]["Lok_Paket"]);
-            chxPaketFiyati.Checked = paket == 1 ? true : false;
+            if (dt.Rows[0]["Lok_Paket"] != null)
+            {
+                byte paket = Convert.ToByte(dt.Rows[0]["Lok_Paket"]);
+                chxPaketFiyati.Checked = paket == 1 ? true : false;
+            }
+
         }
 
     }
@@ -53,22 +57,29 @@ public partial class Controls_LokasyonCariFiyatTanitim : System.Web.UI.UserContr
             int paket = chxPaketFiyati.Checked ? 1 : 0;
             if (Request.QueryString["id"] == null)
             {
-
-                string sorgu = "INSERT INTO [dbo].[LokasyonCariFiyat]([Lok_Lokasyon],[Lok_Cari],Lok_Fiyat,Lok_Fiyat_Tip,Lok_Paket)VALUES('" + drpLokasyon.SelectedValue + "','" + drpMusteri.SelectedValue + "', '" + txtLokFiyat.Text + "'," + tip + "," + paket + ")";
-                int sonuc = f.cmd(sorgu);
-                if (sonuc > 0)
+                int adet = Convert.ToInt32(f.GetDataRow("select count(*) from LokasyonCariFiyat where lok_lokasyon='" + drpLokasyon.SelectedValue + "' and lok_cari='" + drpMusteri.SelectedValue + "'")[0]);
+                if (adet == 0)
                 {
-                    Helper.mesaj(1, "Kayıt Başarılı");
-                    Response.Redirect(Request.RawUrl);
+                    string sorgu = "INSERT INTO [dbo].[LokasyonCariFiyat]([Lok_Lokasyon],[Lok_Cari],Lok_Fiyat,Lok_Fiyat_Tip,Lok_Paket)VALUES('" + drpLokasyon.SelectedValue + "','" + drpMusteri.SelectedValue + "', '" + txtLokFiyat.Text.Replace(",", ".") + "'," + tip + "," + paket + ")";
+                    int sonuc = f.cmd(sorgu);
+                    if (sonuc > 0)
+                    {
+                        Helper.mesaj(1, "Kayıt Başarılı");
+                        Response.Redirect(Request.RawUrl);
+                    }
+                    else
+                    {
+                        Helper.mesaj(0, "Kayıt Başarısız");
+                    }
                 }
                 else
                 {
-                    Helper.mesaj(0, "Kayıt Başarısız");
+                    Helper.mesaj(0, "Böyle bir kayıt zaten mevcut");
                 }
             }
             else
             {
-                string sorgu = "UPDATE [dbo].[LokasyonCariFiyat] SET [Lok_Lokasyon]=" + drpLokasyon.SelectedValue.tirnakla() + ",[Lok_Cari]=" + drpMusteri.SelectedValue.tirnakla() + ",[Lok_Fiyat]=" + txtLokFiyat.Text.tirnakla() + ",Lok_Fiyat_Tip=" + tip + ",Lok_paket=" + paket + " where Id=" + Request.QueryString["id"];
+                string sorgu = "UPDATE [dbo].[LokasyonCariFiyat] SET [Lok_Lokasyon]=" + drpLokasyon.SelectedValue.tirnakla() + ",[Lok_Cari]=" + drpMusteri.SelectedValue.tirnakla() + ",[Lok_Fiyat]=" + txtLokFiyat.Text.Replace(",", ".").tirnakla() + ",Lok_Fiyat_Tip=" + tip + ",Lok_paket=" + paket + " where Id=" + Request.QueryString["id"];
                 int sonuc = f.cmd(sorgu);
                 if (sonuc > 0)
                 {

@@ -54,6 +54,12 @@
                                     <asp:TextBox runat="server" ID="txtAracNot" CssClass="form-control" data-parsley-maxlength="250" placeholder="Araç ile ilgili Not Yazınız..."></asp:TextBox>
                                 </div>
                             </div>
+                             <div class="form-group">
+                                <label class="col-md-2 control-label">Amortisman</label>
+                                <div class="col-md-10">
+                                    <asp:TextBox runat="server" ID="txtAmortisman" CssClass="form-control" placeholder="Aracın Amortismanını Yazınız..."></asp:TextBox>
+                                </div>
+                            </div>
                              <div class="form-group m-b-0">
                                 <div class="pull-right">
                                     <asp:Button ID="btnKaydet" runat="server" CssClass="btn btn-info waves-light" onclick="Kaydet" Text="Kaydet" />
