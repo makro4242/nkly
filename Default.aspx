@@ -295,8 +295,6 @@
     <script src="assets/plugins/notifyjs/dist/notify.min.js"></script>
     <script src="assets/plugins/notifications/notify-metro.js"></script>
     <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
-    <script src="/print.js"></script>
     <script src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
     <script src="assets/plugins/sweetalert/dist/sweetalert.min.js"></script>
     <script src="assets/plugins/select2/select2.min.js" type="text/javascript"></script>
@@ -429,10 +427,7 @@
             $(".select2").select2();
 
             $("#datatable").dataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    'print'
-                ]
+                "order": [[0, "desc"]],
             });
             table = $('#dtSeferler').dataTable();
             $('#dtSeferler tbody').on('click', 'tr', function () {
