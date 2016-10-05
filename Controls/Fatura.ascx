@@ -72,7 +72,7 @@
                                                 <tr>
                                                     <td style="display: none"><%#Eval("sefer_kodu") %></td>
                                                     <td>Nakliye Bedeli</td>
-                                                    <td><%#Eval("sefer_tarih").ToString().Split(' ')[0] %></td>
+                                                    <td><span style="font-size:1px;position:absolute;"><%#Convert.ToDateTime(Eval("Sefer_Tarih")).ToString("yyyy/MM/dd")%></span><span><%#Convert.ToDateTime(Eval("Sefer_Tarih")).ToString("dd/MM/yyyy")%></span></td>
                                                     <td><%#Eval("Cari_Unvan") %></td>
                                                     <td><%# String.Format("{0:N}", Eval("Sefer_miktarKG")) %></td>
                                                     <td><%# String.Format("{0:N}", Eval("Sefer_miktarLT")) %></td>

@@ -85,7 +85,7 @@
                                 <div class="col-md-5">
                                     <asp:TextBox runat="server" ID="txtSeferMiktarKg" CssClass="form-control" MaxLength="7" placeholder="Miktar KG Yazınız..." data-parsley-type="number"></asp:TextBox>
                                 </div>
-                                 <div class="col-md-5">
+                                <div class="col-md-5">
                                     <asp:TextBox runat="server" ID="txtSeferMiktarLt" CssClass="form-control" MaxLength="7" placeholder="Miktar LT Yazınız..." data-parsley-type="number"></asp:TextBox>
                                 </div>
                             </div>
@@ -138,7 +138,7 @@
                             <ItemTemplate>
                                 <tr>
                                     <td><%#Eval("Sefer_Kodu") %></td>
-                                    <td><%#Eval("Sefer_Tarih").ToString().Split(' ')[0]%></td>
+                                    <td><span style="font-size:1px;position:absolute;"><%#Convert.ToDateTime(Eval("Sefer_Tarih")).ToString("yyyy/MM/dd")%></span><span><%#Convert.ToDateTime(Eval("Sefer_Tarih")).ToString("dd/MM/yyyy")%></span></td>
                                     <td><%#Eval("Sefer_IrsaliyeNo")%></td>
                                     <td><%#Eval("Sefer_Fatura")%></td>
                                     <td><%#Eval("Cari_Unvan")%></td>

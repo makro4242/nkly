@@ -128,7 +128,7 @@ public partial class Controls_SeferTanitim : System.Web.UI.UserControl
     }
     public void SeferleriGetir()
     {
-        DataTable dt = f.GetDataTable("select l.lokasyon_aciklama,s.sefer_aktifPasif,s.sefer_IrsaliyeNo,s.sefer_fatura,s.Id,s.Sefer_Kodu,s.Sefer_Tarih,a.Arac_Plaka,c.Cari_Unvan,p.Personel_AdiSoyadi from Seferler s,araclar a,cariler c,personeller p,lokasyon l where s.sefer_personel=p.personel_kodu and s.sefer_arac=a.arac_plaka and s.sefer_cari=c.cari_kodu and l.lokasyon_kodu=s.sefer_lokasyon");
+        DataTable dt = f.GetDataTable("select ROW_NUMBER() OVER (ORDER BY s.sefer_tarih) AS satir,l.lokasyon_aciklama,s.sefer_aktifPasif,s.sefer_IrsaliyeNo,s.sefer_fatura,s.Id,s.Sefer_Kodu,s.Sefer_Tarih,a.Arac_Plaka,c.Cari_Unvan,p.Personel_AdiSoyadi from Seferler s,araclar a,cariler c,personeller p,lokasyon l where s.sefer_personel=p.personel_kodu and s.sefer_arac=a.arac_plaka and s.sefer_cari=c.cari_kodu and l.lokasyon_kodu=s.sefer_lokasyon order by s.sefer_tarih");
         if (dt != null && dt.Rows.Count > 0)
         {
             rptKayitlar.DataSource = dt;
