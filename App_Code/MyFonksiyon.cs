@@ -9,8 +9,8 @@ public class MyFonksiyon
     public SqlConnection baglan()
     {
         //"murat dere"
-        
-        string conString = ("Data Source=93.89.230.234; Initial Catalog=nakliyeee; User Id=haydar; Password=nxw77_K8");
+
+        string conString = ("Data Source=94.73.170.20; Initial Catalog=DB160927143956; User Id=USR160927143956; Password=PSSOb26Np31");
         SqlConnection baglanti = new SqlConnection(conString);
         baglanti.Open();
         return (baglanti);
