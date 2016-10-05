@@ -118,7 +118,7 @@ public partial class Controls_Fatura : System.Web.UI.UserControl
             id = f.GetDataTable("select top 1 chh_kayno from Cari_Hesap_Hareketleri order by chh_kayno desc").Rows[0][0].ToString();
 
         }
-        Response.Redirect("default.aspx?sayfa=fatura-goruntule&id=" + evraknosira);
+        Response.Redirect("default.aspx?sayfa=fatura");
     }
 
     public void carileriGetir()
