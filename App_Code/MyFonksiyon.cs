@@ -10,7 +10,7 @@ public class MyFonksiyon
     {
         //"murat dere"
 
-        string conString = ("Data Source=94.73.170.20; Initial Catalog=DB160927143956; User Id=USR160927143956; Password=PSSOb26Np31");
+        string conString = ("Data Source=94.73.150.5; Initial Catalog=nakliyeee; User Id=makro; Password=3201479sSsS");
         SqlConnection baglanti = new SqlConnection(conString);
         baglanti.Open();
         return (baglanti);
