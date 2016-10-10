@@ -316,9 +316,7 @@
                 });
                 return o;
             };
-            $(".txtEvrakNo").blur(function () {
 
-            });
             $('.frmMasraf').submit(function () {
                 $('.msrfEkle').attr("disabled", true);
                 $('.kitle').attr("disabled", false);
@@ -387,36 +385,46 @@
             ShowMessageBox(arr[0], "Uyarı", arr[1]);
         }
         function confirmSil(element, id, tablo, kolon) {
+            $(element).parent().parent().addClass('selected');
             swal({
                 title: "Eminmisiniz?",
                 text: "Sildikten Sonra Bilgilere Ulaşamayacaksınız!",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonText: "Kapat",
+                cancelButtonClick: "cagir",
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Evet, Silinsin!",
                 closeOnConfirm: false
-            }, function () {
-                $.ajax({
-                    type: "POST",
-                    url: "/service.asmx/kayitSil",
-                    data: "{tablo:'" + tablo + "',id:'" + id + "',kolon:'" + kolon + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (msg) {
-                        if (msg.d == "1") {
-                            $(element).parent().parent().hide();
-                            swal("Silindi!", "Seçtiğiniz Kayıt Silindi.", "success");
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/service.asmx/kayitSil",
+                        data: "{tablo:'" + tablo + "',id:'" + id + "',kolon:'" + kolon + "'}",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (msg) {
+                            if (msg.d == "1") {
+                                $(element).parent().parent().hide();
+                                swal("Silindi!", "Seçtiğiniz Kayıt Silindi.", "success");
+                            }
+                            else {
+                                swal('', msg.d, 'error');
+                            }
+                        },
+                        error: function () {
+                            swal('Hata', 'Kayıt Silinemiyor', 'error');
                         }
-                        else {
-                            swal('', msg.d, 'error');
-                        }
-                    },
-                    error: function () {
-                        swal('Hata', 'Kayıt Silinemiyor', 'error');
-                    }
-                });
-            });
+                    });
+                }
+                else {
+                    $(element).parent().parent().removeClass('selected');
+                }
 
+            });
+        }
+        function cagir() {
+            alert('s');
         }
         var table;
         var araToplam = 0;
@@ -427,16 +435,17 @@
             $(".select2").select2();
 
             $("#datatable").dataTable({
-                "order": [[0, "desc"]],
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
-                }
+                "lengthMenu": [10, 25, 50, 75, 100, 300],
+                "order": [[0, "desc"]]
             });
-            table = $('#dtSeferler').dataTable();
+            table = $('#dtSeferler').dataTable({
+                "order": [[2, "asc"]]
+            });
             $('#dtSeferler tbody').on('click', 'tr', function () {
 
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
+
                     var t = parseFloat($(this).find('td').eq(9).text());
                     araToplam -= yuvarla(t, 2);
                     console.log("çıkart", yuvarla(t, 2));
@@ -450,11 +459,11 @@
                     $(this).addClass('selected');
                     idler.push($(this).find('td').eq(0).text());
                     araToplam += yuvarla(parseFloat($(this).find('td').eq(9).text()), 2);
-                    console.log("ekle " + yuvarla(parseFloat($(this).find('td').eq(9).text()), 2));
-
+                    var tarih = $(this).find('td').eq(2).text();
+                    $(".txtFaturaTarihi").val(tarih.split('-')[1].replace(/\./g, '/'));
                 }
                 araToplam = yuvarla(araToplam, 2);
-                kdv = parseFloat(araToplam * 8 / 100);
+                kdv = parseFloat(araToplam * 18 / 100);
                 kdv = yuvarla(kdv, 2);
                 genToplam = araToplam + kdv;
 
@@ -545,6 +554,19 @@
         }
 
         $(document).ready(function () {
+            $(".txtSeriNo").blur(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/service.asmx/seriNo",
+                    data: "{seriNo:'" + $(this).val() + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (msg) {
+                        $(".txtEvrakNo").val(msg.d);
+                    },
+                    error: function () {
+                    }
+                });
+            });
             $(".cariTamamla").keyup(function () {
                 if ($(this).val().length == 2) {
                     $.ajax({

@@ -41,6 +41,22 @@ public class service : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
+
+    [WebMethod]
+    public string seriNo(string seriNo)
+    {
+        string kayNo = db.exReaderTekSutun(CommandType.Text, "select  ISNULL(Max(chh_evrakno_sira),0) from cari_hesap_hareketleri where chh_serino=@seri", "seri=" + seriNo.stringKaldir());
+        if (kayNo.Length > 0)
+        {
+            kayNo = (Convert.ToInt32(kayNo) + 1).ToString();
+        }
+        else
+        {
+            kayNo = "1";
+        }
+        return kayNo;
+    }
+
     [WebMethod]
     public string evrakMasraf(string evrakNo, string faturaTarihi, string cariKodu, string masrafKodu, string aracPlaka, string personelKodu, string taksitSayisi, string km, string kdv, string tutar)
     {

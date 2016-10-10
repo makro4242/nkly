@@ -55,7 +55,7 @@ public partial class pdf : System.Web.UI.Page
     public iTextSharp.text.Document faturalariGetir()
     {
         iTextSharp.text.Document pdf = null;
-        DataTable dt = db.exReaderDT(CommandType.Text, "select ca.cari_unvan,ca.cari_adres, ch.chh_tarihi,sum(ch.chh_aratoplam) as aratoplam,sum(ch.chh_ft_kdv) as kdv,sum(ch.chh_geneltoplam) as geneltoplam,ch.chh_evrakno_sira from cari_hesap_hareketleri ch,cariler ca where ca.cari_kodu=ch.chh_cari_kodu and ch.chh_evrakno_sira in(select distinct(chh_evrakno_sira) from cari_hesap_hareketleri where chh_evrakno_sira>=@evrakno1 and chh_evrakno_sira<=@evrakno2) group by chh_evrakno_sira,chh_cari_kodu,chh_tarihi,cari_unvan,cari_adres", "evrakno1=" + Request.QueryString["evrakno1"].ToString() + ",evrakno2=" + Request.QueryString["evrakno2"]);
+        DataTable dt = db.exReaderDT(CommandType.Text, "select ca.cari_vergiDairesi,ca.cari_vergiNo, ca.cari_unvan,ca.cari_adres, ch.chh_tarihi,sum(ch.chh_aratoplam) as aratoplam,sum(ch.chh_ft_kdv) as kdv,sum(ch.chh_geneltoplam) as geneltoplam,ch.chh_evrakno_sira from cari_hesap_hareketleri ch,cariler ca where ca.cari_kodu=ch.chh_cari_kodu and ch.chh_evrakno_sira in(select distinct(chh_evrakno_sira) from cari_hesap_hareketleri where chh_evrakno_sira>=@evrakno1 and chh_evrakno_sira<=@evrakno2) group by chh_evrakno_sira,chh_cari_kodu,chh_tarihi,cari_unvan,cari_adres,ca.Cari_VergiDairesi,ca.cari_vergiNO", "evrakno1=" + Request.QueryString["evrakno1"].ToString() + ",evrakno2=" + Request.QueryString["evrakno2"]);
         if (dt != null && dt.Rows.Count > 0)
         {
             myList lst = pdfOlustur();
@@ -68,7 +68,7 @@ public partial class pdf : System.Web.UI.Page
                 {
                     pdf.NewPage();
                 }
-                PdfPTable tblUst = ustTableGetir(item["cari_unvan"].ToString(), item["cari_adres"].ToString(), item["chh_tarihi"].ToString().Split(' ')[0], item["chh_evrakno_sira"].ToString());
+                PdfPTable tblUst = ustTableGetir(item["cari_unvan"].ToString(), item["cari_adres"].ToString(), item["chh_tarihi"].ToString().Split(' ')[0], item["chh_evrakno_sira"].ToString(), item["cari_vergiDairesi"].ToString(), item["cari_vergiNo"].ToString());
                 pdf.Open();
                 pdf.Add(tblUst);
                 PdfPTable tblSatirlar = fatura_bagla(item["chh_evrakno_sira"].ToString());
@@ -89,7 +89,7 @@ public partial class pdf : System.Web.UI.Page
     {
         PdfPTable table = null;
 
-        DataTable dt = db.exReaderDT(CommandType.Text, "select ch.chh_tarihi,c.Cari_Unvan,c.cari_adres,ch.chh_evrakno_sira,sf.Sefer_MiktarKG as sefer_miktar,ch.chh_geneltoplam,ch.chh_aratoplam,ch.chh_ft_kdv from Cari_Hesap_Hareketleri ch, Cariler c, Seferler sf where ch.chh_SeferNo=sf.Sefer_Kodu and ch.chh_cari_kodu=c.Cari_Kodu and ch.chh_evrakno_sira=" + evrakno);
+        DataTable dt = db.exReaderDT(CommandType.Text, "select lk.lok_fiyat,lk.lok_fiyat_tip,lk.lok_paket,ch.chh_tarihi,c.Cari_Unvan,c.cari_adres,ch.chh_evrakno_sira,sf.Sefer_MiktarKG,sf.Sefer_miktarLT,ch.chh_geneltoplam,ch.chh_aratoplam,ch.chh_ft_kdv from lokasyoncarifiyat lk,Cari_Hesap_Hareketleri ch, Cariler c, Seferler sf where ch.chh_SeferNo=sf.Sefer_Kodu and ch.chh_cari_kodu=c.Cari_Kodu and ch.chh_evrakno_sira=@evrakNo and lk.lok_lokasyon=sf.sefer_lokasyon and lk.lok_cari=c.cari_kodu", "evrakNo=" + evrakno);
         if (dt != null && dt.Rows.Count > 0)
         {
             table = hizmetSatirGetir(dt);
@@ -109,7 +109,7 @@ public partial class pdf : System.Web.UI.Page
         myList lst = new myList(writer, pdfDosya);
         return lst;
     }
-    public PdfPTable ustTableGetir(string cari, string cariAdres, string tarih, string belgeNo)
+    public PdfPTable ustTableGetir(string cari, string cariAdres, string tarih, string belgeNo, string vergiDairesi, string vergiNo)
     {
         PdfPTable table = new PdfPTable(3);
         table.HorizontalAlignment = 0;
@@ -119,6 +119,16 @@ public partial class pdf : System.Web.UI.Page
         table.TotalWidth = 595;
         table.LockedWidth = true;
 
+        DataTable dtIrsaliye = db.exReaderDT(CommandType.Text, "select sefer_IrsaliyeNo from seferler where sefer_fatura=@fatura", "fatura=" + belgeNo.stringKaldir());
+        string irsaliyeYaz = "";
+        foreach (DataRow item in dtIrsaliye.Rows)
+        {
+            if (irsaliyeYaz.Length > 0)
+            {
+                irsaliyeYaz += "-";
+            }
+            irsaliyeYaz += item[0].ToString();
+        }
 
         PdfPCell cell = new PdfPCell(new Phrase(cari, fontArial));
         cell.Border = 0;
@@ -134,15 +144,53 @@ public partial class pdf : System.Web.UI.Page
         cell.PaddingLeft = 55;
         cell.Colspan = 1;
         cell.Border = 0;
+        cell.MinimumHeight = 30;
         cell.HorizontalAlignment = 0;
         table.AddCell(cell);
         table.AddCell(new Phrase(""));
 
-        cell = new PdfPCell(new Phrase(tarih + Environment.NewLine + belgeNo, fontArialKucuk));
+        cell = new PdfPCell(new Phrase(tarih, fontArialKucuk));
         cell.Border = 0;
         cell.HorizontalAlignment = 0;
-        cell.PaddingTop = 15;
+        cell.PaddingTop = 22;
         table.AddCell(cell);
+
+        cell = new PdfPCell();
+        //cell.PaddingLeft = 55;
+        cell.Colspan = 1;
+        cell.Border = 0;
+        cell.HorizontalAlignment = 0;
+
+        PdfPTable tb = new PdfPTable(2);
+        tb.SetWidths(new float[] { 160, 150 });
+        tb.TotalWidth = 300;
+        PdfPCell cellNo = new PdfPCell(new Phrase(vergiDairesi, fontArialKucuk));
+        cellNo.PaddingLeft = 70;
+        cellNo.Colspan = 1;
+        cellNo.Border = 0;
+        cellNo.HorizontalAlignment = 0;
+        tb.AddCell(cellNo);
+
+        cellNo = new PdfPCell(new Phrase(vergiNo, fontArialKucuk));
+
+        cellNo.Colspan = 1;
+        cellNo.Border = 0;
+        cellNo.HorizontalAlignment = 2;
+        tb.AddCell(cellNo);
+
+
+        cell.AddElement(tb);
+
+        table.AddCell(cell);
+        table.AddCell(new Phrase(""));
+        cell = new PdfPCell(new Phrase(irsaliyeYaz, fontArialKucuk));
+        cell.Border = 0;
+        cell.HorizontalAlignment = 0;
+        // cell.PaddingTop = 15;
+        table.AddCell(cell);
+
+
+
 
         return table;
     }
@@ -153,7 +201,12 @@ public partial class pdf : System.Web.UI.Page
         tabFot.DefaultCell.Border = 0;
         tabFot.TotalWidth = 560;
         tabFot.LockedWidth = true;
-        PdfPCell cell = new PdfPCell(new Phrase("Yalnız Bin Beşyüzelli. TL Elliiki Kr.", fontArial));
+        kdv = araToplam * 18 / 100;
+        genelToplam = araToplam + kdv;
+
+        string fiyat = Helper.yaziyaCevir(Convert.ToDecimal(genelToplam));
+
+        PdfPCell cell = new PdfPCell(new Phrase("YALNIZ " + fiyat, fontArial));
         cell.Border = 0;
         cell.PaddingLeft = 40;
         cell.HorizontalAlignment = 0;
@@ -194,6 +247,8 @@ public partial class pdf : System.Web.UI.Page
         cell.Border = 0;
         cell.HorizontalAlignment = 0;
         tabFot.AddCell(cell);
+
+
 
         cell = new PdfPCell(new Phrase(String.Format("{0:N}", kdv), fontArialKucuk));
         cell.Border = 0;
@@ -244,14 +299,19 @@ public partial class pdf : System.Web.UI.Page
             cell.HorizontalAlignment = 0;
             table.AddCell(cell);
 
-            cell = new PdfPCell(new Phrase(item["sefer_miktar"].ToString(), fontArial));
+            string seferMiktarTip = "sefer_miktarKg";
+            if (!Convert.ToBoolean(item["lok_fiyat_tip"]))
+            {
+                seferMiktarTip = "sefer_miktarLT";
+            }
+            cell = new PdfPCell(new Phrase(item[seferMiktarTip].ToString(), fontArial));
             cell.Colspan = 1;
             cell.Border = 0;
             cell.HorizontalAlignment = 0; //0=Left, 1=Centre, 2=Right
             table.AddCell(cell);
 
             float kdv = (float)Convert.ToDouble(item["chh_ft_kdv"]);
-            cell = new PdfPCell(new Phrase(String.Format("{0:N}", kdv), fontArialKucuk));
+            cell = new PdfPCell(new Phrase(item["lok_fiyat"].ToString(), fontArialKucuk));
             cell.Border = 0;
             cell.HorizontalAlignment = 0;
             table.AddCell(cell);

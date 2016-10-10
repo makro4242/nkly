@@ -25,16 +25,22 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label class="col-md-2 control-label">Seri</label>
+                                    <div class="col-md-4">
+                                        <asp:TextBox ID="txtSeriNo" runat="server" CssClass="form-control txtSeriNo"></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-md-2 control-label">Evrak No</label>
                                     <div class="col-md-4">
-                                        <asp:TextBox ID="txtEvrakNo" runat="server" CssClass="form-control" required data-parsley-maxlength="25"></asp:TextBox>
+                                        <asp:TextBox ID="txtEvrakNo" runat="server" CssClass="form-control txtEvrakNo" required data-parsley-maxlength="25"></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Tarih</label>
                                     <div class="col-md-4">
                                         <div class="input-group">
-                                            <asp:TextBox ID="txtFaturaTarihi" runat="server" CssClass="form-control tarih zorunlu" required data-parsley-maxlength="11" placeholder data-mask="99/99/9999"></asp:TextBox>
+                                            <asp:TextBox ID="txtFaturaTarihi" runat="server" CssClass="form-control tarih zorunlu txtFaturaTarihi" required data-parsley-maxlength="11" placeholder data-mask="99/99/9999"></asp:TextBox>
                                             <span class="input-group-addon bg-custom b-0 text-white"><i class="icon-calender"></i></span>
                                         </div>
                                     </div>
@@ -72,7 +78,7 @@
                                                 <tr>
                                                     <td style="display: none"><%#Eval("sefer_kodu") %></td>
                                                     <td>Nakliye Bedeli</td>
-                                                    <td><span style="font-size:1px;position:absolute;"><%#Convert.ToDateTime(Eval("Sefer_Tarih")).ToString("yyyy/MM/dd")%></span><span><%#Convert.ToDateTime(Eval("Sefer_Tarih")).ToString("dd/MM/yyyy")%></span></td>
+                                                    <td><span style="font-size: 1px; position: absolute;"><%#Convert.ToDateTime(Eval("Sefer_Tarih")).ToString("yyyy-MM-dd")%>-</span><span><%#Convert.ToDateTime(Eval("Sefer_Tarih")).ToString("dd/MM/yyyy")%></span></td>
                                                     <td><%#Eval("Cari_Unvan") %></td>
                                                     <td><%# String.Format("{0:N}", Eval("Sefer_miktarKG")) %></td>
                                                     <td><%# String.Format("{0:N}", Eval("Sefer_miktarLT")) %></td>
@@ -93,7 +99,7 @@
                         </div>
                         <hr />
                         <div class="row">
-                            <div class="col-md-4 pull-right">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="col-md-6 control-label">Ara Toplam</label>
                                     <div class="col-md-6">
@@ -114,9 +120,6 @@
                                 </div>
 
                             </div>
-                        </div>
-                        <hr />
-                        <div class="row">
                             <div class="col-md-4 pull-right">
                                 <div class="form-group">
                                     <label class="col-md-6 control-label"></label>
@@ -138,6 +141,7 @@
                 <table id="datatable" class="table table-striped table-bordered">
                     <thead>
                         <tr>
+                            <th style="display: none;"></th>
                             <th>Evrak No</th>
                             <th>Tarih</th>
                             <th>Cari
@@ -152,8 +156,9 @@
                         <asp:Repeater runat="server" ID="rptKayitlar">
                             <ItemTemplate>
                                 <tr>
+                                    <td style="display: none;"><%#Convert.ToDateTime(Eval("chh_tarihi")).ToString("yyyy-MM-dd")%></td>
                                     <td><%#Eval("chh_evrakno_sira") %></td>
-                                    <td><%#Eval("chh_tarihi")%></td>
+                                    <td><%#Convert.ToDateTime(Eval("chh_tarihi")).ToString("yyyy/MM/dd")%></td>
                                     <td><%#Eval("cari_unvan")%></td>
                                     <td><%#String.Format("{0:N}",Eval("chh_aratoplam"))%></td>
                                     <td><%#String.Format("{0:N}",Eval("chh_ft_kdv"))%></td>

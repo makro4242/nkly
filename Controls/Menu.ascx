@@ -22,6 +22,7 @@
                     <ul class="list-unstyled">
                         <li><a href="Default.aspx?sayfa=Fatura">Fatura</a></li>
                         <li><a href="Default.aspx?sayfa=fatura-sec"">Fatura Yazdır</a></li>
+                        <li><a href="Default.aspx?sayfa=fatura-numaralandir"">Fatura Numaralandır</a></li>
                         <li><a href="Default.aspx?sayfa=EvrakMasrafFaturasi">Masraf</a></li>
                     </ul>
                 </li>
