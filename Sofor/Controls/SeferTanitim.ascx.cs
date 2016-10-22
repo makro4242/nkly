@@ -10,6 +10,7 @@ public partial class Sofor_Controls_SeferTanitim : System.Web.UI.UserControl
 {
 
     MyFonksiyon f = new MyFonksiyon();
+    myLibrary.myDbHelper db = new myLibrary.myDbHelper(new myLibrary.sqlDbHelper());
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!Page.IsPostBack)
@@ -17,30 +18,47 @@ public partial class Sofor_Controls_SeferTanitim : System.Web.UI.UserControl
             seferBilgileriniGetir();
         }
     }
+    public bool irsaliyeKontrol()
+    {
+        bool kontrol = false;
+        string adet = db.exReaderTekSutun(CommandType.Text, "select count(*) from seferler where sefer_IrsaliyeNo=@irsaliye and sefer_kodu!=@sefer and sefer_IrsaliyeNo!=0", "irsaliye=" + txtIrsaliyeNo.Text + ",sefer=" + hdnseferkodu.Value);
+        if (adet.Length > 0 && adet == "0")
+        {
+            kontrol = true;
+        }
+        return kontrol;
+    }
     protected void Kaydet(object sender, EventArgs e)
     {
-        string BitKm = "0";
-        string BasKm = txtBasKm.Text;
-        if (BasKm.Trim().Length == 0)
+        if (irsaliyeKontrol())
         {
-            BasKm = "0";
-        }
-        else
-        {
-            BitKm = txtBitKm.Text;
-            if (BitKm.Trim().Length == 0)
+            string BitKm = "0";
+            string BasKm = txtBasKm.Text;
+            if (BasKm.Trim().Length == 0)
             {
-                BitKm = "0";
+                BasKm = "0";
             }
             else
             {
-                f.cmd("Update Seferler Set Sefer_AktifPasif=0 where Sefer_Kodu=" + hdnseferkodu.Value);
+                BitKm = txtBitKm.Text;
+                if (BitKm.Trim().Length == 0)
+                {
+                    BitKm = "0";
+                }
+                else
+                {
+                    f.cmd("Update Seferler Set Sefer_AktifPasif=0 where Sefer_Kodu=" + hdnseferkodu.Value);
+                }
             }
+            f.cmd("Update Seferler Set Sefer_MiktarKG=" + txtSeferMiktarKG.Text.tirnakla() + ",Sefer_MiktarLT=" + txtSeferMiktarLT.Text.tirnakla
+                () + ",Sefer_IrsaliyeNo=" + txtIrsaliyeNo.Text.tirnakla() + ", Sefer_BasKm=" + BasKm + ", Sefer_BitKm=" + BitKm + " where Sefer_Kodu=" + hdnseferkodu.Value);
+            Helper.mesaj(1, "Kayıt Güncelleme Başarılı");
+            Response.Redirect(Request.RawUrl);
         }
-        f.cmd("Update Seferler Set Sefer_MiktarKG=" + txtSeferMiktarKG.Text.tirnakla() + ",Sefer_MiktarLT=" + txtSeferMiktarLT.Text.tirnakla
-            () + ",Sefer_IrsaliyeNo=" + txtIrsaliyeNo.Text.tirnakla() + ", Sefer_BasKm=" + BasKm + ", Sefer_BitKm=" + BitKm + " where Sefer_Kodu=" + hdnseferkodu.Value);
-        Helper.mesaj(1, "Kayıt Güncelleme Başarılı");
-        Response.Redirect(Request.RawUrl);
+        else
+        {
+            Helper.mesaj(0, "Bu irsaliye no daha önce kullanılmış");
+        }
     }
 
     public void seferBilgileriniGetir()

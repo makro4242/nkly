@@ -131,4 +131,31 @@
             </div>
         </div>
     </asp:Panel>
+
+    <asp:Panel ID="pnlSefer" runat="server" Visible="false">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box">
+                    <table id="datatable" class="table table-striped table-bordered myTable">
+                        <thead>
+                            <tr>
+                                <th>Sefer Kodu</th>
+                                <th>Kar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <asp:Repeater runat="server" ID="rptSefer">
+                                <ItemTemplate>
+                                    <tr>
+                                        <td><%#Eval("sefer_kodu") %></td>
+                                        <td><%#String.Format("{0:N}", Eval("Fark")) %></td>
+                                    </tr>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </asp:Panel>
 </asp:Panel>

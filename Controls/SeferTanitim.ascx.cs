@@ -128,13 +128,24 @@ public partial class Controls_SeferTanitim : System.Web.UI.UserControl
     }
     public void SeferleriGetir()
     {
-        DataTable dt = f.GetDataTable("select l.lokasyon_aciklama,s.sefer_aktifPasif,s.sefer_IrsaliyeNo,coalesce(ch.chh_evrakno_sira,0) as sefer_fatura,s.Id,s.Sefer_Kodu,s.Sefer_Tarih,a.Arac_Plaka,c.Cari_Unvan,p.Personel_AdiSoyadi from Seferler s left join cari_hesap_hareketleri ch on s.sefer_kodu=ch.chh_seferNo,araclar a,cariler c,personeller p,lokasyon l  where s.sefer_personel=p.personel_kodu and s.sefer_arac=a.arac_plaka and s.sefer_cari=c.cari_kodu and l.lokasyon_kodu=s.sefer_lokasyon order by s.sefer_tarih");
+        DataTable dt = f.GetDataTable("select ROW_NUMBER() OVER (ORDER BY s.sefer_tarih) AS satir,l.lokasyon_aciklama,s.sefer_aktifPasif,s.sefer_IrsaliyeNo,s.sefer_fatura,s.Id,s.Sefer_Kodu,s.Sefer_Tarih,a.Arac_Plaka,c.Cari_Unvan,p.Personel_AdiSoyadi from Seferler s,araclar a,cariler c,personeller p,lokasyon l where s.sefer_personel=p.personel_kodu and s.sefer_arac=a.arac_plaka and s.sefer_cari=c.cari_kodu and l.lokasyon_kodu=s.sefer_lokasyon order by s.sefer_tarih");
         if (dt != null && dt.Rows.Count > 0)
         {
             rptKayitlar.DataSource = dt;
             rptKayitlar.DataBind();
         }
 
+    }
+    public bool irsaliyeKontrol()
+    {
+        myLibrary.myDbHelper db = new myLibrary.myDbHelper(new myLibrary.sqlDbHelper());
+        bool kontrol = false;
+        string adet = db.exReaderTekSutun(CommandType.Text, "select count(*) from seferler where sefer_IrsaliyeNo=@irsaliye and sefer_IrsaliyeNo!=0", "irsaliye=" + txtIrsaliyeNo.Text);
+        if (adet.Length > 0 && adet == "0")
+        {
+            kontrol = true;
+        }
+        return kontrol;
     }
     protected void Kaydet(object sender, EventArgs e)
     {
@@ -144,42 +155,49 @@ public partial class Controls_SeferTanitim : System.Web.UI.UserControl
         }
         else
         {
-            string tarih = Convert.ToDateTime(txtSeferTarihi.Text).ToString("yyyy-MM-dd");
-            if (Request.QueryString["id"] == null)
+            if (irsaliyeKontrol())
             {
-                string adet = f.GetDataRow("select count(*) from seferler where sefer_kodu='" + f.Temizle(txtSeferSayisi.Text.ToUpper()) + "'")[0].ToString();
-                if (adet == "0")
+                string tarih = Convert.ToDateTime(txtSeferTarihi.Text).ToString("yyyy-MM-dd");
+                if (Request.QueryString["id"] == null)
                 {
-                    string sorgu = "INSERT INTO [dbo].[Seferler]VALUES((select max(sefer_kodu)+1 from seferler),'" + tarih + "','0','" + drpSeferPersoneli.SelectedValue + "','" + drpMusteri.SelectedValue + "','" + drpSeferArac.SelectedValue + "','" + drpSeferLokasyon.SelectedValue + "','" + f.Temizle(txtSeferMiktarKg.Text) + "'," + f.Temizle(txtSeferMiktarLt.Text).tirnakla() + ",'" + txtBasKm.Text + "','" + txtBitKm.Text + "'," + chcAktifPasif.Checked.ToString().tirnakla() + "," + txtIrsaliyeNo.Text.tirnakla() + ")";
-                    int sonuc = f.cmd(sorgu);
-                    if (sonuc > 0)
+                    string adet = f.GetDataRow("select count(*) from seferler where sefer_kodu='" + f.Temizle(txtSeferSayisi.Text.ToUpper()) + "'")[0].ToString();
+                    if (adet == "0")
                     {
-                        Helper.mesaj(1, "Kayıt Başarılı");
-                        Response.Redirect(Request.RawUrl);
+                        string sorgu = "INSERT INTO [dbo].[Seferler]VALUES((select max(sefer_kodu)+1 from seferler),'" + tarih + "','0','" + drpSeferPersoneli.SelectedValue + "','" + drpMusteri.SelectedValue + "','" + drpSeferArac.SelectedValue + "','" + drpSeferLokasyon.SelectedValue + "','" + f.Temizle(txtSeferMiktarKg.Text) + "'," + f.Temizle(txtSeferMiktarLt.Text).tirnakla() + ",'" + txtBasKm.Text + "','" + txtBitKm.Text + "'," + chcAktifPasif.Checked.ToString().tirnakla() + "," + txtIrsaliyeNo.Text.tirnakla() + ")";
+                        int sonuc = f.cmd(sorgu);
+                        if (sonuc > 0)
+                        {
+                            Helper.mesaj(1, "Kayıt Başarılı");
+                            Response.Redirect(Request.RawUrl);
+                        }
+                        else
+                        {
+                            Helper.mesaj(0, "Kayıt Başarısız");
+                        }
                     }
                     else
                     {
-                        Helper.mesaj(0, "Kayıt Başarısız");
+                        Helper.mesaj(0, "Sefer Koduna ait bir kayıt mevcut");
                     }
                 }
                 else
                 {
-                    Helper.mesaj(0, "Sefer Koduna ait bir kayıt mevcut");
+                    string sorgu = "update seferler set Sefer_IrsaliyeNo=" + f.Temizle(txtIrsaliyeNo.Text).tirnakla() + ",Sefer_Kodu=" + f.Temizle(txtSeferSayisi.Text).tirnakla() + ",Sefer_Tarih=" + tarih.tirnakla() + ",Sefer_Personel=" + drpSeferPersoneli.SelectedValue.tirnakla() + ",Sefer_Cari=" + drpMusteri.SelectedValue.tirnakla() + ",Sefer_Arac=" + drpSeferArac.SelectedValue.tirnakla() + ",Sefer_lokasyon=" + drpSeferLokasyon.SelectedValue.tirnakla() + ",Sefer_MiktarKg=" + txtSeferMiktarKg.Text.tirnakla() + ",Sefer_MiktarLT=" + txtSeferMiktarLt.Text.tirnakla() + ",Sefer_BasKm=" + f.Temizle(txtBasKm.Text).tirnakla() + ",Sefer_BitKm=" + f.Temizle(txtBitKm.Text).tirnakla() + ",Sefer_AktifPasif=" + chcAktifPasif.Checked.ToString().tirnakla() + " where Id=" + f.Temizle(Request.QueryString["id"]);
+                    int sonuc = f.cmd(sorgu);
+                    if (sonuc > 0)
+                    {
+                        Helper.mesaj(1, "Güncelleme Başarılı");
+                        Response.Redirect(Request.RawUrl.Split('&')[0]);
+                    }
+                    else
+                    {
+                        Helper.mesaj(0, "Güncelleme Başarısız");
+                    }
                 }
             }
             else
             {
-                string sorgu = "update seferler set Sefer_IrsaliyeNo=" + f.Temizle(txtIrsaliyeNo.Text).tirnakla() + ",Sefer_Kodu=" + f.Temizle(txtSeferSayisi.Text).tirnakla() + ",Sefer_Tarih=" + tarih.tirnakla() + ",Sefer_Personel=" + drpSeferPersoneli.SelectedValue.tirnakla() + ",Sefer_Cari=" + drpMusteri.SelectedValue.tirnakla() + ",Sefer_Arac=" + drpSeferArac.SelectedValue.tirnakla() + ",Sefer_lokasyon=" + drpSeferLokasyon.SelectedValue.tirnakla() + ",Sefer_MiktarKg=" + txtSeferMiktarKg.Text.tirnakla() + ",Sefer_MiktarLT=" + txtSeferMiktarLt.Text.tirnakla() + ",Sefer_BasKm=" + f.Temizle(txtBasKm.Text).tirnakla() + ",Sefer_BitKm=" + f.Temizle(txtBitKm.Text).tirnakla() + ",Sefer_AktifPasif=" + chcAktifPasif.Checked.ToString().tirnakla() + " where Id=" + f.Temizle(Request.QueryString["id"]);
-                int sonuc = f.cmd(sorgu);
-                if (sonuc > 0)
-                {
-                    Helper.mesaj(1, "Güncelleme Başarılı");
-                    Response.Redirect(Request.RawUrl.Split('&')[0]);
-                }
-                else
-                {
-                    Helper.mesaj(0, "Güncelleme Başarısız");
-                }
+                Helper.mesaj(0, "Bu irsaliye no daha önce kullanılmış");
             }
         }
     }

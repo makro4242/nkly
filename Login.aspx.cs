@@ -33,7 +33,7 @@ public partial class Login : System.Web.UI.Page
                 cookienesne.Expires = DateTime.Now.AddDays(30);  //Cookie'mizin ömrü 30 saniye olacak.
                 Response.Cookies.Add(cookienesne);
             }
-            if (dt.Rows[0][3].ToString().ToLower() == "false")
+            if (dt.Rows[0][3].ToString() == "0")
             {
                 HttpCookie cookienesne2 = new HttpCookie("Sofor");
                 cookienesne2["kullaniciadi"] = txtKullaniciAdi.Text;
@@ -43,13 +43,21 @@ public partial class Login : System.Web.UI.Page
                 Response.Cookies.Add(cookienesne2);
                 Response.Redirect("/Sofor");
             }
-            else
+            else if (dt.Rows[0][3].ToString() == "1")
             {
                 HttpCookie cookienesne2 = new HttpCookie("admin");
                 cookienesne2["kullaniciadi"] = txtKullaniciAdi.Text;
                 cookienesne2.Expires = DateTime.Now.AddDays(1);
                 Response.Cookies.Add(cookienesne2);
                 Response.Redirect("/");
+            }
+            else if (dt.Rows[0][3].ToString() == "2")
+            {
+                HttpCookie cookienesne2 = new HttpCookie("crm");
+                cookienesne2["kullaniciadi"] = txtKullaniciAdi.Text;
+                cookienesne2.Expires = DateTime.Now.AddDays(1);
+                Response.Cookies.Add(cookienesne2);
+                Response.Redirect("/crm");
             }
         }
         else
