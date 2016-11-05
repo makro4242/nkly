@@ -460,7 +460,7 @@
                     idler.push($(this).find('td').eq(0).text());
                     araToplam += yuvarla(parseFloat($(this).find('td').eq(9).text()), 2);
                     var tarih = $(this).find('td').eq(2).text();
-                    $(".txtFaturaTarihi").val(tarih.split('-')[1].replace(/\./g, '/'));
+                    $(".txtFaturaTarihi").val(tarih.split('-')[3].replace(/\./g, '/'));
                 }
                 araToplam = yuvarla(araToplam, 2);
                 kdv = parseFloat(araToplam * 18 / 100);
